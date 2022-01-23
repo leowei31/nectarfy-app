@@ -12,7 +12,7 @@ class WelcomeDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 250,
+      height: 200,
       child: Card(
         elevation: 5,
         color: Theme.of(context).primaryColor,
