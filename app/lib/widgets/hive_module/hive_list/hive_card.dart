@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../model/hive.dart';
+import '../../../model/hive.dart';
 
 class HiveCard extends StatelessWidget {
   final Hive hive;

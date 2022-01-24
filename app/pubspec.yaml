@@ -62,7 +62,6 @@ flutter:
     - assets/images/hive_2.jpg
     - assets/images/hive_3.jpg
     - assets/images/no_hive.png
-    - assets/images/temp_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

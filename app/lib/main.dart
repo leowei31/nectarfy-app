@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './views/hive_module.dart';
-import './widgets/hive_module/add_hive.dart';
+import './widgets/hive_module/hive_list/add_hive.dart';
 
 void main() {
   runApp(const MyApp());

@@ -4,9 +4,10 @@ import './welcome_user_title.dart';
 import './action_items_dashboard.dart';
 
 class WelcomeDashboard extends StatelessWidget {
+  final String name;
+  final int numOfActions;
   
-  
-  const WelcomeDashboard({ Key? key }) : super(key: key);
+  const WelcomeDashboard({ Key? key, required this.name, required this.numOfActions }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +18,10 @@ class WelcomeDashboard extends StatelessWidget {
         elevation: 5,
         color: Theme.of(context).primaryColor,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            WelcomeUserTitle(firstName: 'Thiago'),
-            Expanded( 
-              child: ActionItemsDashboard(actions: 2)
-            )
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            WelcomeUserTitle(firstName: name),
+            ActionItemsDashboard(actions: numOfActions)
           ],
         ),
       ));

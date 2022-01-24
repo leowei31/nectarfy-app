@@ -22,39 +22,12 @@ class Hive {
     required this.profilePicPath,
   });
 
-  String getId() {
-    return id;
-  }
-  
-  String getName() {
-    return name;
-  }
-
-  String getOwnerId() {
-    return ownerId;
-  }
-
-  double getHumidity() {
-    return humidity;
-  }
-
-  double getTemperature() {
-    return temperature;
-  }
-
-  double getWeight() {
-    return weight;
-  }
-
-  DateTime getLastFed() {
-    return lastFed;
-  }
-
-  bool getHasActions() {
-    return hasActions;
-  }
-
-  String getProfilePicPath() {
-    return profilePicPath;
-  }
+  String getId() => id;
+  String getName() => name;
+  String getOwnerId() => ownerId;
+  double getHumidity() => humidity;
+  double getTemperature() => temperature;
+  double getWeight() => weight;
+  DateTime getLastFed() => lastFed;
+  String getProfilePicPath() => profilePicPath;
 }
