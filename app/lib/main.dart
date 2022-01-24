@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './views/hive_module.dart';
+import './widgets/hive_module/add_hive.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -33,6 +35,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _addHiveHandler(BuildContext context) {
+    showModalBottomSheet(context: context, builder: (_) {
+      return AddHive(callbackFn: tempHandler);
+    }); 
+  }
+
+  void tempHandler() {
+    return;
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -44,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const HiveModule(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _addHiveHandler(context),
       )
     );
   }

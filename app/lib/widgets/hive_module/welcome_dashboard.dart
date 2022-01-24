@@ -21,7 +21,7 @@ class WelcomeDashboard extends StatelessWidget {
           children: const <Widget>[
             WelcomeUserTitle(firstName: 'Thiago'),
             Expanded( 
-              child: ActionItemsDashboard(actions: 5)
+              child: ActionItemsDashboard(actions: 2)
             )
           ],
         ),

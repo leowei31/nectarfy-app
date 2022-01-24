@@ -13,16 +13,14 @@ class HiveList extends StatefulWidget {
 class _HiveListState extends State<HiveList> {
 
   final List<Hive> listOfHives = [
-    Hive(id: 'h1', name: 'hive 1', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: false),
-    Hive(id: 'h2', name: 'hive 2', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true),
-    Hive(id: 'h3', name: 'hive 3', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true),
-    Hive(id: 'h4', name: 'hive 4', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: false),
-    Hive(id: 'h5', name: 'hive 5', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: false),
+    Hive(id: 'h1', name: 'hive 1', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: false, profilePicPath: 'hive_1.jpg'),
+    Hive(id: 'h2', name: 'hive 2', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_2.jpg'),
+    Hive(id: 'h3', name: 'hive 3', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_3.jpg'),
   ];
 
   final List<Hive> actionList = [
-    Hive(id: 'h2', name: 'hive 2', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true),
-    Hive(id: 'h3', name: 'hive 3', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true),
+    // Hive(id: 'h2', name: 'hive 2', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_2.jpg'),
+    // Hive(id: 'h3', name: 'hive 3', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_3.jpg'),
   ];
 
   bool allHives = true;
@@ -47,17 +45,23 @@ class _HiveListState extends State<HiveList> {
               IconButton(onPressed: changeCategoryHandler, icon: const Icon(Icons.keyboard_arrow_right_outlined)),
         ],),),
         
-        SizedBox(
-          height: 400,
-          width: double.infinity,
-          child: ListView.builder(
-          itemBuilder: (ctx, i) {
-            return HiveCard(hive: allHives ? listOfHives[i] : actionList[i]);
-            // return HiveCard(hive: listOfHives[i]);
-          },
-          itemCount: allHives ? listOfHives.length : actionList.length,
-        ))
-
+        (allHives && listOfHives.isEmpty) || (!allHives && actionList.isEmpty) ? 
+          // Container(
+          Column(children: <Widget>[
+            Image.asset('assets/images/no_hive.png'),
+            const Text('No hives to display!'),
+          ],)
+          // ) 
+          :
+          SizedBox(
+            height: 400,
+            width: double.infinity,
+            child: ListView.builder(
+            itemBuilder: (ctx, i) {
+              return HiveCard(hive: allHives ? listOfHives[i] : actionList[i]);
+            },
+            itemCount: allHives ? listOfHives.length : actionList.length,
+          ))
       ],
     );
   }

@@ -8,6 +8,7 @@ class Hive {
   final double weight;
   final DateTime lastFed;
   final bool hasActions;
+  final String profilePicPath;
 
   Hive({
     required this.id,
@@ -18,6 +19,7 @@ class Hive {
     required this.weight,
     required this.lastFed,
     required this.hasActions,
+    required this.profilePicPath,
   });
 
   String getId() {
@@ -50,5 +52,9 @@ class Hive {
 
   bool getHasActions() {
     return hasActions;
+  }
+
+  String getProfilePicPath() {
+    return profilePicPath;
   }
 }
