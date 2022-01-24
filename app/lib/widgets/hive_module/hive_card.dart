@@ -11,11 +11,11 @@ class HiveCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140,
+      height: 170,
       width: double.infinity,
       margin: const EdgeInsets.all(8),
       child: Card(
-        elevation: 5,
+        elevation: 3,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -29,7 +29,12 @@ class HiveCard extends StatelessWidget {
                         backgroundImage: AssetImage('assets/images/${hive.getProfilePicPath()}'),
                         radius: 35,
                       ),
-                    Text(hive.getName())
+                    Container(
+                      margin: const EdgeInsets.only(top: 7),
+                      child: Text(
+                        hive.getName(),
+                        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w300),
+                    )),
                   ]),
             ),
             Container(
@@ -44,28 +49,40 @@ class HiveCard extends StatelessWidget {
                         Icons.thermostat,
                         color: Color.fromRGBO(231, 111, 81, 100),
                       ),
-                      Text('Current temperature: ${hive.getTemperature().toString()}º C')
+                      Text(
+                        'Current temperature: ${hive.getTemperature().toString()}º C',
+                        style: const TextStyle(fontSize: 12),
+                      )
                     ]),
                     Row(children: <Widget>[
                       const Icon(
                         Icons.water,
                         color: Color.fromRGBO(231, 111, 81, 100),
                       ),
-                      Text('Current humidity: ${hive.getHumidity().toString()}%')
+                      Text(
+                        'Current humidity: ${hive.getHumidity().toString()}%',
+                        style: const TextStyle(fontSize: 12),
+                      )
                     ]),
                     Row(children: <Widget>[
                       const Icon(
                         Icons.monitor_weight,
                         color: Color.fromRGBO(231, 111, 81, 100),
                       ),
-                      Text('Current weight: ${hive.getWeight().toString()} kg')
+                      Text(
+                        'Current weight: ${hive.getWeight().toString()} kg',
+                        style: const TextStyle(fontSize: 12),
+                      )
                     ]),
                     Row(children: <Widget>[
                       const Icon(
                         Icons.food_bank,
                         color: Color.fromRGBO(231, 111, 81, 100),
                       ),
-                      Text('Last fed: ${DateFormat.yMMMMd().format(hive.getLastFed())}')
+                      Text(
+                        'Last fed: ${DateFormat.yMMMMd().format(hive.getLastFed())}',
+                        style: const TextStyle(fontSize: 12),
+                      )
                     ]),
               ],)),
         ],),

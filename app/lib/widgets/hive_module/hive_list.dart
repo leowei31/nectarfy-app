@@ -13,9 +13,9 @@ class HiveList extends StatefulWidget {
 class _HiveListState extends State<HiveList> {
 
   final List<Hive> listOfHives = [
-    Hive(id: 'h1', name: 'hive 1', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: false, profilePicPath: 'hive_1.jpg'),
-    Hive(id: 'h2', name: 'hive 2', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_2.jpg'),
-    Hive(id: 'h3', name: 'hive 3', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_3.jpg'),
+    Hive(id: 'h1', name: 'Nectarfy #1', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: false, profilePicPath: 'hive_1.jpg'),
+    Hive(id: 'h2', name: 'Nectarfy #2', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_2.jpg'),
+    Hive(id: 'h3', name: 'Nectarfy #3', ownerId: '0', humidity: 12, temperature: 10, weight: 20, lastFed: DateTime.now(), hasActions: true, profilePicPath: 'hive_3.jpg'),
   ];
 
   final List<Hive> actionList = [
@@ -41,7 +41,24 @@ class _HiveListState extends State<HiveList> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               IconButton(onPressed: changeCategoryHandler, icon: const Icon(Icons.keyboard_arrow_left_outlined)),
-              Text(allHives ? 'All hives' : 'Action items'),
+              Container(
+                width: 250,
+                height: 32,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 0.5,
+                    )
+                  ]
+                ),
+                child: Center(child: Text(
+                  allHives ? 'ALL HIVES' : 'ACTION ITEMS',
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                )),
+              ),
               IconButton(onPressed: changeCategoryHandler, icon: const Icon(Icons.keyboard_arrow_right_outlined)),
         ],),),
         
