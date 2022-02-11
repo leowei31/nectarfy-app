@@ -29,7 +29,7 @@ class HiveList extends StatelessWidget {
                 ],
               )
             : SizedBox(
-                height: mediaQuery.size.height * 0.5,
+                height: mediaQuery.size.height * 0.45,
                 width: double.infinity,
                 child: ListView.builder(
                   itemBuilder: (ctx, i) {
