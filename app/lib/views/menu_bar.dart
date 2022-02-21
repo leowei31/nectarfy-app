@@ -36,10 +36,12 @@ class _MenuBarState extends State<MenuBar> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: Container(
-        height: 60,
+        height: mediaQuery.size.height * 0.1,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
@@ -52,7 +54,8 @@ class _MenuBarState extends State<MenuBar> {
           unselectedItemColor: Theme.of(context).accentColor,
           selectedItemColor: Colors.white,
           currentIndex: _selectedPageIndex,
-          // type: BottomNavigationBarType.shifting,
+          iconSize: 20,
+          selectedFontSize: 12,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.insert_comment_outlined),
