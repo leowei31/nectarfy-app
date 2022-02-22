@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import './views/hive_module.dart';
+import './views/community_module.dart';
 import './widgets/hive_module/hive_list/add_hive.dart';
 
 void main() {
@@ -67,10 +68,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 appbarHeight -
                 mediaQuery.padding.top -
                 mediaQuery.padding.bottom),
-            child: const HiveModule()),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => _addHiveHandler(context),
-        ));
+            child: const CommunityModule()),
+            // child: const HiveModule()),
+            // Abstract later
+        // floatingActionButton: FloatingActionButton(
+        //   child: const Icon(Icons.add),
+        //   onPressed: () => _addHiveHandler(context),
+        // )
+      );
   }
 }
