@@ -26,7 +26,7 @@ class _CommunityBoardState extends State<CommunityBoard> {
       height: media.size.height * 0.23,
       child: Card(
         color: Theme.of(context).primaryColor,
-        elevation: 2,
+        elevation: 0,
         child: Container(
           margin: const EdgeInsets.all(20),
           child: Column(
@@ -56,7 +56,7 @@ class _CommunityBoardState extends State<CommunityBoard> {
                     fillColor: Colors.white,
                     hintStyle: const TextStyle(fontSize: 12),
                     hintText: "Search Community",
-                    // suffixIcon: IconButton(padding: const EdgeInsets.all(1), alignment: Alignment.center,),
+                    suffixIcon: IconButton(icon: const Icon(Icons.search), onPressed: _searchHandler, iconSize: 22,),
                   ),
                 ),
               )
