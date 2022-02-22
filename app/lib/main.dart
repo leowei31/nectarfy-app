@@ -63,12 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: SizedBox(
-            height: (mediaQuery.size.height -
-                appbarHeight -
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: (mediaQuery.size.height - appbarHeight -
                 mediaQuery.padding.top -
                 mediaQuery.padding.bottom),
             child: const CommunityModule()),
+        )
             // child: const HiveModule()),
             // Abstract later
         // floatingActionButton: FloatingActionButton(
