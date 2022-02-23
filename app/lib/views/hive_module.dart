@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 import '../widgets/hive_module/dashboard/welcome_dashboard.dart';
 import '../widgets/hive_module/hive_list/hive_list.dart';
@@ -6,6 +7,7 @@ import '../widgets/hive_module/hive_list/hive_list_controller.dart';
 import '../model/hive.dart';
 import '../model/action_item.dart';
 import '../widgets/hive_module/hive_list/add_hive.dart';
+import '../widgets/bluetooth/bluetooth.dart';
 
 class HiveModule extends StatefulWidget {
   const HiveModule({Key? key}) : super(key: key);
@@ -95,27 +97,38 @@ class _HiveModuleState extends State<HiveModule> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: SizedBox(
-            height: (mediaQuery.size.height -
-                appbarHeight -
-                mediaQuery.padding.top -
-                mediaQuery.padding.bottom),
-            child: Column(
-              children: <Widget>[
-                WelcomeDashboard(
-                    name: 'Thiago', numOfActions: actionList.length),
-                HiveListController(
-                    allHives: allHives, callbackFn: changeCategoryHandler),
-                HiveList(
-                  listOfHives: hives,
-                  actionList: actionList,
-                  allHives: allHives,
-                ),
-              ],
-            )),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => _addHiveHandler(context),
-        ));
+        body: StreamBuilder<BluetoothState>(
+            stream: FlutterBlue.instance.state,
+            initialData: BluetoothState.unknown,
+            builder: (c, snapshot) {
+              final state = snapshot.data;
+              if (state == BluetoothState.on) {
+                return FindDevicesScreen();
+              }
+              return BluetoothOffScreen(state: state);
+            })
+        // body: SizedBox(
+        //     height: (mediaQuery.size.height -
+        //         appbarHeight -
+        //         mediaQuery.padding.top -
+        //         mediaQuery.padding.bottom),
+        //     child: Column(
+        //       children: <Widget>[
+        //         WelcomeDashboard(
+        //             name: 'Thiago', numOfActions: actionList.length),
+        //         HiveListController(
+        //             allHives: allHives, callbackFn: changeCategoryHandler),
+        //         HiveList(
+        //           listOfHives: hives,
+        //           actionList: actionList,
+        //           allHives: allHives,
+        //         ),
+        //       ],
+        //     )),
+        // floatingActionButton: FloatingActionButton(
+        //   child: const Icon(Icons.add),
+        //   onPressed: () => _addHiveHandler(context),
+        // ));
+        );
   }
 }
