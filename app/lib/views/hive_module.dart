@@ -5,6 +5,7 @@ import '../widgets/hive_module/hive_list/hive_list.dart';
 import '../widgets/hive_module/hive_list/hive_list_controller.dart';
 import '../model/hive.dart';
 import '../model/action_item.dart';
+import '../widgets/hive_module/hive_list/add_hive.dart';
 
 class HiveModule extends StatefulWidget {
   const HiveModule({Key? key}) : super(key: key);
@@ -14,6 +15,18 @@ class HiveModule extends StatefulWidget {
 }
 
 class _HiveModuleState extends State<HiveModule> {
+  void _addHiveHandler(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return AddHive(callbackFn: tempHandler);
+        });
+  }
+
+  void tempHandler() {
+    return;
+  }
+
   bool allHives = true;
 
   final List<Hive> hives = [
@@ -76,19 +89,34 @@ class _HiveModuleState extends State<HiveModule> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (ctx, constraints) {
-      return Column(
-        children: <Widget>[
-          WelcomeDashboard(name: 'Thiago', numOfActions: actionList.length),
-          HiveListController(
-              allHives: allHives, callbackFn: changeCategoryHandler),
-          HiveList(
-            listOfHives: hives,
-            actionList: actionList,
-            allHives: allHives,
-          ),
-        ],
-      );
-    });
+    final mediaQuery = MediaQuery.of(context);
+    final appbarHeight = AppBar().preferredSize.height;
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: const Text('Your Hives'),
+        ),
+        body: SizedBox(
+            height: (mediaQuery.size.height -
+                appbarHeight -
+                mediaQuery.padding.top -
+                mediaQuery.padding.bottom),
+            child: Column(
+              children: <Widget>[
+                WelcomeDashboard(
+                    name: 'Thiago', numOfActions: actionList.length),
+                HiveListController(
+                    allHives: allHives, callbackFn: changeCategoryHandler),
+                HiveList(
+                  listOfHives: hives,
+                  actionList: actionList,
+                  allHives: allHives,
+                ),
+              ],
+            )),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () => _addHiveHandler(context),
+        ));
   }
 }

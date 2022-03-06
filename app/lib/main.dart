@@ -2,9 +2,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
 
-import './views/hive_module.dart';
-import './views/community_module.dart';
-import './widgets/hive_module/hive_list/add_hive.dart';
+import './views/menu_bar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,54 +26,54 @@ class MyApp extends StatelessWidget {
         accentColor: const Color(0xFF264653),
         fontFamily: 'Lato',
       ),
-      home: const MyHomePage(title: 'Nectarfy'),
+      home: const MenuBar(),
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (ctx) => const MenuBar(),
+      // },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({Key? key, required this.title}) : super(key: key);
+//   final String title;
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
 
-class _MyHomePageState extends State<MyHomePage> {
-  void _addHiveHandler(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return AddHive(callbackFn: tempHandler);
-        });
-  }
+// class _MyHomePageState extends State<MyHomePage> {
+//   void _addHiveHandler(BuildContext context) {
+//     showModalBottomSheet(
+//         context: context,
+//         builder: (_) {
+//           return AddHive(callbackFn: tempHandler);
+//         });
+//   }
 
-  void tempHandler() {
-    return;
-  }
+//   void tempHandler() {
+//     return;
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final appbarHeight = AppBar().preferredSize.height;
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: (mediaQuery.size.height - appbarHeight -
-                mediaQuery.padding.top -
-                mediaQuery.padding.bottom),
-            child: const CommunityModule()),
-        )
-            // child: const HiveModule()),
-            // Abstract later
-        // floatingActionButton: FloatingActionButton(
-        //   child: const Icon(Icons.add),
-        //   onPressed: () => _addHiveHandler(context),
-        // )
-      );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final mediaQuery = MediaQuery.of(context);
+//     final appbarHeight = AppBar().preferredSize.height;
+//     return Scaffold(
+//         appBar: AppBar(
+//           title: Text(widget.title),
+//           backgroundColor: Theme.of(context).primaryColor,
+//         ),
+//         body: SizedBox(
+//             height: (mediaQuery.size.height -
+//                 appbarHeight -
+//                 mediaQuery.padding.top -
+//                 mediaQuery.padding.bottom),
+//             child: const HiveModule()),
+//         floatingActionButton: FloatingActionButton(
+//           child: const Icon(Icons.add),
+//           onPressed: () => _addHiveHandler(context),
+//         ));
+//   }
+// }
