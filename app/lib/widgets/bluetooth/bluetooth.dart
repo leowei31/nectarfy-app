@@ -47,6 +47,13 @@ class FindDevicesScreen extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 20, height: 2, fontWeight: FontWeight.bold),
               ),
+              const Text(
+                "Start Searching for devices using the bottom right button",
+                style: TextStyle(
+                  fontSize: 12,
+                  height: 2,
+                ),
+              ),
               StreamBuilder<List<BluetoothDevice>>(
                 stream: Stream.periodic(Duration(seconds: 2))
                     .asyncMap((_) => FlutterBlue.instance.connectedDevices),
