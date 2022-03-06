@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import './hive_module.dart';
 import './community_module.dart';
+import './profile_module.dart';
 
 class MenuBar extends StatefulWidget {
   const MenuBar({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _MenuBarState extends State<MenuBar> {
       'title': 'Your Hive',
     },
     {
-      'page': CommunityModule(),
+      'page': ProfileModule(),
       'title': 'Profile',
     }
   ];
