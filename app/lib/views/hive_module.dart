@@ -87,6 +87,11 @@ class _HiveModuleState extends State<HiveModule> {
     });
   }
 
+  void _handleHiveCard(String hiveId, String hiveName) {
+    print('Id: $hiveId');
+    print('Title: $hiveName');
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -111,6 +116,7 @@ class _HiveModuleState extends State<HiveModule> {
                   listOfHives: hives,
                   actionList: actionList,
                   allHives: allHives,
+                  onPressedFn: _handleHiveCard,
                 ),
               ],
             )),

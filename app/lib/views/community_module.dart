@@ -11,6 +11,16 @@ class CommunityModule extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final appbarHeight = AppBar().preferredSize.height;
+
+    void _handlePost(String title, String description) {
+      print('Title: $title');
+      print('Description: $description');
+    }
+
+    void _handleCategory(String title) {
+      print(title);
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -25,32 +35,35 @@ class CommunityModule extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.all(10),
             child: Column(
-              children: const <Widget>[
+              children: <Widget>[
                 // Community Board
-                CommunityBoard(),
+                const CommunityBoard(),
 
-                Padding(padding: EdgeInsets.only(bottom: 25)),
+                const Padding(padding: EdgeInsets.only(bottom: 25)),
 
                 // Hot post #1
                 FeaturedPost(
-                    section: "Recently created post",
-                    title: "What method have you guys found to be the most...",
-                    desc:
-                        "As per the title, what method have you guys found to be the most effective when fighting a Varroa Mite infestation?"),
+                  section: "Recently created post",
+                  title: "What method have you guys found to be the most...",
+                  desc: "As per the title, what method have you guys found to be the most effective when fighting a Varroa Mite infestation?",
+                  onPressedFn: _handlePost,
+                ),
 
-                Padding(padding: EdgeInsets.only(bottom: 15)),
+                const Padding(padding: EdgeInsets.only(bottom: 15)),
 
                 // Hot post #2
                 FeaturedPost(
                     section: "Hottest post",
                     title: "What method have you guys found to be the most...",
                     desc:
-                        "As per the title, what method have you guys found to be the most effective when fighting a Varroa Mite infestation?"),
+                        "As per the title, what method have you guys found to be the most effective when fighting a Varroa Mite infestation?",
+                    onPressedFn: _handlePost,
+                ),
 
-                Padding(padding: EdgeInsets.only(bottom: 15)),
+                const Padding(padding: EdgeInsets.only(bottom: 15)),
 
                 // Categories
-                Categories(),
+                Categories(onPressedFn: _handleCategory),
               ],
             ),
           ),
