@@ -24,7 +24,10 @@ class HiveList extends StatelessWidget {
         (allHives && listOfHives.isEmpty) || (!allHives && actionList.isEmpty)
             ? Column(
                 children: <Widget>[
-                  Image.asset('assets/images/no_hive.png'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25, bottom: 35),
+                    child: Image.asset('assets/images/no_hive.png', height: 200,),
+                  ),
                   const Text('No hives to display!'),
                 ],
               )
