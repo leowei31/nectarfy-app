@@ -6,6 +6,7 @@ import '../widgets/hive_module/hive_list/hive_list_controller.dart';
 import '../model/hive.dart';
 import '../model/action_item.dart';
 import '../widgets/hive_module/hive_list/add_hive.dart';
+import '../widgets/hive_module/hive_list/hive_details.dart';
 
 class HiveModule extends StatefulWidget {
   const HiveModule({Key? key}) : super(key: key);
@@ -90,6 +91,11 @@ class _HiveModuleState extends State<HiveModule> {
   void _handleHiveCard(String hiveId, String hiveName) {
     print('Id: $hiveId');
     print('Title: $hiveName');
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return const HiveDetails();
+        });
   }
 
   @override
