@@ -13,10 +13,33 @@ class _NewPostState extends State<NewPost> {
   final _descriptionController = TextEditingController();
   String _category = 'General';
   DateTime _time = DateTime.now();
+  bool _canpost = false;
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    _titleController.addListener(() {
+      if (_titleController.text.isEmpty) {
+        setState(() {
+          _canpost = false;
+        });
+      } else if (!_descriptionController.text.isEmpty) {
+        setState(() {
+          _canpost = true;
+        });
+      }
+    });
+    _descriptionController.addListener(() {
+      if (_descriptionController.text.isEmpty) {
+        setState(() {
+          _canpost = false;
+        });
+      } else if (!_titleController.text.isEmpty) {
+        setState(() {
+          _canpost = true;
+        });
+      }
+    });
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: mediaQuery.size.height * 0.9),
       child: Padding(
@@ -30,7 +53,7 @@ class _NewPostState extends State<NewPost> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.tealAccent,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: TextField(
@@ -117,13 +140,11 @@ class _NewPostState extends State<NewPost> {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Theme.of(context).primaryColor),
                       ),
-                      onPressed: () {
-                        if (_titleController.text != "" &&
-                            _descriptionController.text != "") {
-                          print(_titleController.text);
-                          print(_descriptionController.text);
-                        }
-                      },
+                      onPressed: _canpost
+                          ? () {
+                              print('Adding Post');
+                            }
+                          : null,
                     ),
                   ],
                 )
