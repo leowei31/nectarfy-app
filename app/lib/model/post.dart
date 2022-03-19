@@ -2,7 +2,6 @@ import './user.dart';
 import './comment.dart';
 
 class Post {
-
   final User user;
   final String title;
   final String description;

@@ -14,5 +14,4 @@ class Comment {
   User getUser() => user;
   String getComment() => comment;
   DateTime getDatePosted() => datePosted;
-
 }
