@@ -5,12 +5,22 @@ class FeaturedPost extends StatelessWidget {
   final String section;
   final String title;
   final String desc;
+  final Function onPressedFn;
 
-  const FeaturedPost({ Key? key, required this.section, required this.title, required this.desc}) : super(key: key);
+  const FeaturedPost({ 
+    Key? key, 
+    required this.section, 
+    required this.title, 
+    required this.desc,
+    required this.onPressedFn,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+      onTap: () {
+        onPressedFn(title, desc);
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

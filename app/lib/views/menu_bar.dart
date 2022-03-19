@@ -41,7 +41,7 @@ class _MenuBarState extends State<MenuBar> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         backgroundColor: Colors.cyan[900],
-        unselectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Colors.white.withOpacity(0.6),
         selectedItemColor: Colors.white,
         currentIndex: _selectedPageIndex,
         // type: BottomNavigationBarType.shifting,

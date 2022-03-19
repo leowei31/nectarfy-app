@@ -3,14 +3,16 @@ import "package:flutter/material.dart";
 import "./single_category.dart";
 
 class Categories extends StatelessWidget {
+
+  final Function onPressedFn;
   
-  const Categories({ Key? key }) : super(key: key);
+  const Categories({ Key? key, required this.onPressedFn }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    const SingleCategory temp  = SingleCategory(title: "Nectarfy hives");
-    const SingleCategory temp2 = SingleCategory(title: "Extract honey");
+    SingleCategory temp  = SingleCategory(title: "Nectarfy hives", onPressedFn: onPressedFn);
+    SingleCategory temp2 = SingleCategory(title: "Extract honey", onPressedFn: onPressedFn,);
 
     return Expanded(
       child: Column(
@@ -26,7 +28,7 @@ class Categories extends StatelessWidget {
               childAspectRatio: (2 / 1),
               mainAxisSpacing: 10,
               crossAxisSpacing: 5,
-              children: const <Widget> [temp, temp2, temp, temp, temp, temp,temp, temp2, temp, temp, temp, temp,temp, temp2, temp, temp, temp, temp],
+              children: <Widget> [temp, temp2, temp, temp, temp, temp,temp, temp2, temp, temp, temp, temp,temp, temp2, temp, temp, temp, temp],
             ),
           ),
         ],

@@ -7,12 +7,15 @@ class HiveList extends StatelessWidget {
   final List<Hive> listOfHives;
   final List<Hive> actionList;
   final bool allHives;
+  final Function onPressedFn;
 
   const HiveList(
       {Key? key,
       required this.listOfHives,
       required this.actionList,
-      required this.allHives})
+      required this.allHives,
+      required this.onPressedFn
+      })
       : super(key: key);
 
   @override
@@ -24,7 +27,10 @@ class HiveList extends StatelessWidget {
         (allHives && listOfHives.isEmpty) || (!allHives && actionList.isEmpty)
             ? Column(
                 children: <Widget>[
-                  Image.asset('assets/images/no_hive.png'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25, bottom: 35),
+                    child: Image.asset('assets/images/no_hive.png', height: 200,),
+                  ),
                   const Text('No hives to display!'),
                 ],
               )
@@ -34,7 +40,9 @@ class HiveList extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (ctx, i) {
                     return HiveCard(
-                        hive: allHives ? listOfHives[i] : actionList[i]);
+                        hive: allHives ? listOfHives[i] : actionList[i],
+                        onPressedFn: onPressedFn,
+                        );
                   },
                   itemCount: allHives ? listOfHives.length : actionList.length,
                 ))
