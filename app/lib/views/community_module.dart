@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/community_module/community_board.dart';
 import '../widgets/community_module/featured_post.dart';
 import '../widgets/community_module/categories.dart';
+import './individual_post.dart';
 
 class CommunityModule extends StatelessWidget {
   const CommunityModule({Key? key}) : super(key: key);
@@ -15,6 +16,11 @@ class CommunityModule extends StatelessWidget {
     void _handlePost(String title, String description) {
       print('Title: $title');
       print('Description: $description');
+
+      Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => const IndividualPost())
+      );
     }
 
     void _handleCategory(String title) {
