@@ -8,7 +8,7 @@ class Comment {
   Comment({
     required this.user,
     required this.comment,
-    required this.datePosted,
+    required this.datePosted
   });
 
   User getUser() => user;

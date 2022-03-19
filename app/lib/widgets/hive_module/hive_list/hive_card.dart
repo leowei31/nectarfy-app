@@ -54,8 +54,10 @@ class HiveCard extends StatelessWidget {
                           Icons.thermostat,
                           color: Color.fromRGBO(231, 111, 81, 100),
                         ),
+                        const Padding(padding: EdgeInsets.only(right: 3.5)),
+                        const Text('Current temperature: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                         Text(
-                          'Current temperature: ${hive.getTemperature().toString()}º C',
+                          '${hive.getTemperature().toString()}º C',
                           style: const TextStyle(fontSize: 12),
                         )
                       ]),
@@ -64,8 +66,10 @@ class HiveCard extends StatelessWidget {
                           Icons.water,
                           color: Color.fromRGBO(231, 111, 81, 100),
                         ),
+                        const Padding(padding: EdgeInsets.only(right: 3.5)),
+                        const Text('Current humidity: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                         Text(
-                          'Current humidity: ${hive.getHumidity().toString()}%',
+                          '${hive.getHumidity().toString()}%',
                           style: const TextStyle(fontSize: 12),
                         )
                       ]),
@@ -74,8 +78,10 @@ class HiveCard extends StatelessWidget {
                           Icons.monitor_weight,
                           color: Color.fromRGBO(231, 111, 81, 100),
                         ),
+                        const Padding(padding: EdgeInsets.only(right: 3.5)),
+                        const Text('Current weight: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                         Text(
-                          'Current weight: ${hive.getWeight().toString()} kg',
+                          '${hive.getWeight().toString()} kg',
                           style: const TextStyle(fontSize: 12),
                         )
                       ]),
@@ -84,8 +90,10 @@ class HiveCard extends StatelessWidget {
                           Icons.food_bank,
                           color: Color.fromRGBO(231, 111, 81, 100),
                         ),
+                        const Padding(padding: EdgeInsets.only(right: 3.5)),
+                        const Text('Last fed: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                         Text(
-                          'Last fed: ${DateFormat.yMMMMd().format(hive.getLastFed())}',
+                          DateFormat.yMMMMd().format(hive.getLastFed()),
                           style: const TextStyle(fontSize: 12),
                         )
                       ]),
