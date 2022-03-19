@@ -6,7 +6,7 @@ import '../widgets/individual_post/comment_card.dart';
 import '../widgets/individual_post/add_comment.dart';
 import '../model/user.dart';
 import '../model/post.dart';
-import '../model/comment.dart';
+import '../model/comment.dart'; 
 
 class IndividualPost extends StatelessWidget {  
   

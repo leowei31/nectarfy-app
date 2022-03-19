@@ -1,65 +1,55 @@
 import "package:flutter/material.dart";
 
+import '../../model/post.dart';
+import '../individual_post/likes_comments_info.dart';
+import '../individual_post/user_info_header.dart';
+
 class FeaturedPost extends StatelessWidget {
 
-  final String section;
-  final String title;
-  final String desc;
+  final Post post;
   final Function onPressedFn;
 
   const FeaturedPost({ 
     Key? key, 
-    required this.section, 
-    required this.title, 
-    required this.desc,
+    required this.post,
     required this.onPressedFn,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+
+    final String _trimmedDescription = Characters(post.getDescription()).length < 251 ? post.getDescription() : '${post.getDescription().substring(0, 251)}...';
+
     return InkWell(
       onTap: () {
-        onPressedFn(title, desc);
+        onPressedFn();
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6, left: 5),
-            child: Text(section, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 120,
-            child: Card(
-              elevation: 0,
-              color: Theme.of(context).primaryColor.withOpacity(0.6),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12, right: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 3.0),
-                      child: Image.asset('assets/images/sample_post.png', height: 90,),
-                    ),
-                    SizedBox(
-                      width: 240,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
-                          Text(desc, style: const TextStyle(fontSize: 10, color: Colors.blueGrey),),
-                        ],
-                      ),
-                    )
-                  ],
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: double.infinity,
+          minHeight: 100,
+        ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                UserInfoHeader(user: post.getUser(), datePosted: post.getDatePosted(), imageHeight: 30.0, fontSize: 10,),
+                Container(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(post.getTitle(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                 ),
-              ),
+                Container(
+                  padding: const EdgeInsets.only(top: 5.0),
+                  child: Text(_trimmedDescription, style: const TextStyle(fontSize: 10, color: Colors.blueGrey)),
+                ),
+                const Padding(padding: EdgeInsets.only(top: 10.0)),
+                LikesCommentsInfo(numOfLikes: post.getNumOfLikes(), numOfComments: post.getComments().length, size: 15.0, fontSize: 12, iconColor: Colors.grey, textColor: Colors.grey,)
+              ],
             ),
-          ),
-        ],
-      ),
+          )
+        ),
     );
   }
 }

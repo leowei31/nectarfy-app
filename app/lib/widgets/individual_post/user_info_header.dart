@@ -7,11 +7,17 @@ class UserInfoHeader extends StatelessWidget {
 
   final User user;
   final DateTime datePosted;
+  final double imageHeight;
+  final bool omitPicture;
+  final double fontSize;
 
   const UserInfoHeader({ 
     Key? key, 
     required this.user, 
-    required this.datePosted 
+    required this.datePosted,
+    this.imageHeight = 40.0,
+    this.omitPicture = false,
+    this.fontSize = 12,
   }) : super(key: key);
 
   @override
@@ -42,16 +48,16 @@ class UserInfoHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row( children: [
-        ClipRRect(
+        omitPicture ? const SizedBox.shrink() : ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(40)),
-          child: Image.asset('assets/images/no_profile_pic.png', height: 40,),
+          child: Image.asset('assets/images/no_profile_pic.png', height: imageHeight,),
         ),
         const Padding(padding: EdgeInsets.only(right: 8.0)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('${user.firstName} ${user.lastName}', style: const TextStyle(fontSize: 12),),
-            Text(convertToAgo(datePosted), style: const TextStyle(fontSize: 12),),
+            Text('${user.firstName} ${user.lastName}', style: TextStyle(fontSize: fontSize),),
+            Text(convertToAgo(datePosted), style: TextStyle(fontSize: fontSize),),
           ],
         ),
         ]
