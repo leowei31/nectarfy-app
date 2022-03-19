@@ -91,11 +91,6 @@ class _HiveModuleState extends State<HiveModule> {
   void _handleHiveCard(String hiveId, String hiveName) {
     print('Id: $hiveId');
     print('Title: $hiveName');
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return const HiveDetails();
-        });
   }
 
   @override
