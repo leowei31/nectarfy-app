@@ -129,7 +129,7 @@ class ServiceTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Service'),
+            const Text('Service'),
             Text('0x${service.uuid.toString().toUpperCase().substring(4, 8)}')
           ],
         ),
@@ -168,6 +168,8 @@ class CharacteristicTile extends StatelessWidget {
       initialData: characteristic.lastValue,
       builder: (c, snapshot) {
         final value = snapshot.data;
+        print('snapshot value:');
+        print(characteristic.read());
         return ExpansionTile(
           title: ListTile(
             title: Column(
