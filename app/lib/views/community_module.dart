@@ -19,7 +19,7 @@ class CommunityModule extends StatelessWidget {
 
       Navigator.push(
         context, 
-        MaterialPageRoute(builder: (context) => const IndividualPost())
+        MaterialPageRoute(builder: (context) => IndividualPost())
       );
     }
 
