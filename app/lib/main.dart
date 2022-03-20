@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import './views/menu_bar.dart';
 
+import './views/login.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         accentColor: const Color(0xFF264653),
         fontFamily: 'Lato',
       ),
-      home: const MenuBar(),
+      home: const LoginScreen(),
       // initialRoute: '/',
       // routes: {
       //   '/': (ctx) => const MenuBar(),
