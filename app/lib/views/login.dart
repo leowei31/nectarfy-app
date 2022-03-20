@@ -1,4 +1,4 @@
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -47,15 +47,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text("Add User"),
                       onPressed: () {
                         AuthService().addUser(name, password).then((val) {
-                          Fluttertoast.showToast(
-                            msg: val.data['msg'],
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                          // Fluttertoast.showToast(
+                          //   msg: val.data['msg'],
+                          //   toastLength: Toast.LENGTH_SHORT,
+                          //   gravity: ToastGravity.BOTTOM,
+                          //   timeInSecForIosWeb: 1,
+                          //   backgroundColor: Colors.green,
+                          //   textColor: Colors.white,
+                          //   fontSize: 16.0,
+                          // );
                         });
                       }),
                   ElevatedButton(
@@ -64,15 +64,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         AuthService().login(name, password).then((val) {
                           if (val.data['success']) {
                             token = val.data['token'];
-                            Fluttertoast.showToast(
-                              msg: 'Authenticated',
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.green,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
+                            // Fluttertoast.showToast(
+                            //   msg: 'Authenticated',
+                            //   toastLength: Toast.LENGTH_SHORT,
+                            //   gravity: ToastGravity.BOTTOM,
+                            //   timeInSecForIosWeb: 1,
+                            //   backgroundColor: Colors.green,
+                            //   textColor: Colors.white,
+                            //   fontSize: 16.0,
+                            // );
                             AuthService().getinfo(token).then((val) {
                               context
                                   .read<UserState>()
