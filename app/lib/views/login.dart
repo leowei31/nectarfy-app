@@ -80,6 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               print(val.data['msg']);
                               context.read<UserState>().loginsuccess();
                             });
+                            AuthService().getuserid(token).then((val) {
+                              context
+                                  .read<UserState>()
+                                  .getuserid(val.data['msg']);
+                              print(val.data['msg']);
+                            });
                           }
                         });
                       }),

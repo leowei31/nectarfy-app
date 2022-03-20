@@ -32,4 +32,9 @@ class AuthService {
     dio.options.headers['Authorization'] = 'Bearer $token';
     return await dio.get('https://flutterauthnectarfy.herokuapp.com/getinfo');
   }
+
+  getuserid(token) async {
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    return await dio.get('https://flutterauthnectarfy.herokuapp.com/getuserid');
+  }
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/user_provider.dart';
+import '../../services/postservice.dart';
 
 class NewPost extends StatefulWidget {
   const NewPost({Key? key}) : super(key: key);
@@ -18,6 +22,8 @@ class _NewPostState extends State<NewPost> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final _userid = context.watch<UserState>().userid;
+
     _titleController.addListener(() {
       if (_titleController.text.isEmpty) {
         setState(() {
@@ -68,6 +74,9 @@ class _NewPostState extends State<NewPost> {
                     maxLines: 5, // when user presses enter it will adapt to it
                     controller: _titleController,
                     onSubmitted: (_) {
+                      print(_titleController);
+                    },
+                    onChanged: (_) {
                       print(_titleController);
                     },
                   ),
@@ -142,7 +151,17 @@ class _NewPostState extends State<NewPost> {
                       ),
                       onPressed: _canpost
                           ? () {
-                              print('Adding Post');
+                              PostService()
+                                  .newPost(_titleController.text,
+                                      _descriptionController.text, _userid)
+                                  .then((val) {
+                                if (val.data['success']) {
+                                  print('success');
+                                } else {
+                                  print('yikes');
+                                }
+                              });
+                              Navigator.pop(context);
                             }
                           : null,
                     ),

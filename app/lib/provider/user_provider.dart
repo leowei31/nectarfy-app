@@ -9,6 +9,10 @@ class UserState with ChangeNotifier {
 
   String get username => _username;
 
+  Object _userid = {};
+
+  Object get userid => _userid;
+
   void loginsuccess() {
     _loggedin = true;
     notifyListeners();
@@ -21,5 +25,9 @@ class UserState with ChangeNotifier {
 
   void getusername(val) {
     _username = val;
+  }
+
+  void getuserid(val) {
+    _userid = val;
   }
 }
