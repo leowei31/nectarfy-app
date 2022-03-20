@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/hive_module/dashboard/welcome_dashboard.dart';
 import '../widgets/hive_module/hive_list/hive_list.dart';
@@ -7,6 +8,7 @@ import '../model/hive.dart';
 import '../model/action_item.dart';
 import '../widgets/hive_module/hive_list/add_hive.dart';
 import '../widgets/hive_module/hive_list/hive_details.dart';
+import '../provider/user_provider.dart';
 
 class HiveModule extends StatefulWidget {
   const HiveModule({Key? key}) : super(key: key);
@@ -97,6 +99,7 @@ class _HiveModuleState extends State<HiveModule> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final appbarHeight = AppBar().preferredSize.height;
+    final username = context.watch<UserState>().username;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -110,7 +113,7 @@ class _HiveModuleState extends State<HiveModule> {
             child: Column(
               children: <Widget>[
                 WelcomeDashboard(
-                    name: 'Thiago', numOfActions: actionList.length),
+                    name: username, numOfActions: actionList.length),
                 HiveListController(
                     allHives: allHives, callbackFn: changeCategoryHandler),
                 HiveList(

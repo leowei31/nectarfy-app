@@ -1,7 +1,10 @@
+import 'package:app/provider/user_provider.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import './provider/user_provider.dart';
 import './views/menu_bar.dart';
 
 import './views/login.dart';
@@ -13,14 +16,28 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => UserState()),
+    ], child: const MyApp()),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool loggedin = false;
+
+  @override
   Widget build(BuildContext context) {
+    setState(() {
+      loggedin = context.watch<UserState>().loggedin;
+    });
     return MaterialApp(
       title: 'Nectarfy',
       theme: ThemeData(
@@ -28,10 +45,11 @@ class MyApp extends StatelessWidget {
         accentColor: const Color(0xFF264653),
         fontFamily: 'Lato',
       ),
-      home: const LoginScreen(),
-      // initialRoute: '/',
+      home: loggedin ? const MenuBar() : const LoginScreen(),
+      // initialRoute: "/",
       // routes: {
       //   '/': (ctx) => const MenuBar(),
+      //   '/login': (ctx) => const LoginScreen(),
       // },
     );
   }
