@@ -1,8 +1,13 @@
+import 'package:app/model/comment.dart';
+import 'package:app/model/user.dart';
 import 'package:flutter/material.dart';
 
 class AddComment extends StatefulWidget {
+
+  final Function onPressedFn;
+  final Function closeModal;
   
-  const AddComment({ Key? key }) : super(key: key);
+  const AddComment({ Key? key, required this.onPressedFn, required this.closeModal }) : super(key: key);
 
   @override
   
@@ -62,7 +67,13 @@ class _AddCommentState extends State<AddComment> {
                 ),
                 ElevatedButton(
                   onPressed: !isEmpty ? () {
-                    print(commentController.text);
+                    final Comment c = Comment(
+                      user: User(userId: '213', firstName: 'CHANGE LATER'), 
+                      comment: commentController.value.text, 
+                      datePosted: DateTime.now());
+
+                    widget.onPressedFn(c);
+                    widget.closeModal(context);
                   } : null, 
                   child: const Text('Reply', style: TextStyle(fontSize: 12)),
                   style: ButtonStyle(
