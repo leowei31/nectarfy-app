@@ -36,7 +36,7 @@ class _CategoryPostsState extends State<CategoryPosts> {
 
     void _initState() async {
       try {
-        final url = Uri.parse('http://10.43.190.251:3000/post/category/${widget.category.getId()}');
+        final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/post/category/${widget.category.getId()}');
         final response = await http.get(url);
         final posts = json.decode(response.body) as List<dynamic>;
         

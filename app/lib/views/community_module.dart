@@ -66,8 +66,7 @@ class _CommunityModuleState extends State<CommunityModule> {
 
     Future<void> fetchCategories() async {
       print('FETCHING...');
-      // final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/category');
-      final url = Uri.parse('http://10.43.190.251:3000/category');
+      final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/category');
       try {
         final response = await http.get(url);
         final arrResponse = json.decode(response.body) as List<dynamic>;

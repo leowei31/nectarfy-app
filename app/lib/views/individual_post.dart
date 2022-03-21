@@ -48,7 +48,7 @@ class _IndividualPostState extends State<IndividualPost> {
 
       try {
 
-        final url = Uri.parse('http://10.43.190.251:3000/post/comment/${widget.post.getId()}');
+        final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/post/comment/${widget.post.getId()}');
         final headers = <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           };
@@ -86,7 +86,7 @@ class _IndividualPostState extends State<IndividualPost> {
     void _handleLikeButton() async {
       
       if (isLiked) {
-        final url = Uri.parse('http://10.43.190.251:3000/post/unlike/${widget.post.getId()}');
+        final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/post/unlike/${widget.post.getId()}');
         final headers = <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           };
@@ -101,7 +101,7 @@ class _IndividualPostState extends State<IndividualPost> {
 
         widget.post.getLikes().remove(user.getUserId());
       } else {
-        final url = Uri.parse('http://10.43.190.251:3000/post/like/${widget.post.getId()}');
+        final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/post/like/${widget.post.getId()}');
         final headers = <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           };
