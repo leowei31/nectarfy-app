@@ -7,7 +7,6 @@ import '../widgets/hive_module/hive_list/hive_list_controller.dart';
 import '../model/hive.dart';
 import '../model/action_item.dart';
 import '../widgets/hive_module/hive_list/add_hive.dart';
-import '../widgets/hive_module/hive_list/hive_details.dart';
 import '../provider/user_provider.dart';
 
 class HiveModule extends StatefulWidget {

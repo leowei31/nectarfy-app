@@ -23,7 +23,7 @@ class FeaturedPost extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        onPressedFn();
+        onPressedFn(post);
       },
       child: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -45,7 +45,7 @@ class FeaturedPost extends StatelessWidget {
                   child: Text(_trimmedDescription, style: const TextStyle(fontSize: 10, color: Colors.blueGrey)),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 10.0)),
-                LikesCommentsInfo(numOfLikes: post.getNumOfLikes(), numOfComments: post.getComments().length, size: 15.0, fontSize: 12, iconColor: Colors.grey, textColor: Colors.grey,)
+                LikesCommentsInfo(numOfLikes: post.getLikes().length, numOfComments: post.getComments().length, size: 15.0, fontSize: 12, iconColor: Colors.grey, textColor: Colors.grey, onPressedFn: () {},)
               ],
             ),
           )

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class WelcomeUserTitle extends StatelessWidget {
   final String firstName;
 
-  const WelcomeUserTitle({ Key? key, required this.firstName }) : super(key: key);
+  const WelcomeUserTitle({Key? key, required this.firstName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +13,11 @@ class WelcomeUserTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text('Good morning,', style: TextStyle(color: Colors.white, fontSize: 16),),
-          Text('$firstName.', style: const TextStyle(fontSize: 16)),
+          const Text(
+            'Good morning,',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          Text('@$firstName.', style: const TextStyle(fontSize: 16)),
         ],
       ),
     );

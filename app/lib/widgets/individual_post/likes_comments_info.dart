@@ -8,6 +8,8 @@ class LikesCommentsInfo extends StatelessWidget {
   final double? fontSize;
   final Color? textColor;
   final Color? iconColor;
+  final bool isLiked;
+  final Function onPressedFn;
 
   const LikesCommentsInfo({ 
     Key? key, 
@@ -16,7 +18,9 @@ class LikesCommentsInfo extends StatelessWidget {
     this.size = 22,
     this.fontSize = 14,
     this.textColor = Colors.black,
-    this.iconColor = Colors.black
+    this.iconColor = Colors.black,
+    this.isLiked = false,
+    required this.onPressedFn,
   }
   ) : super(key: key);
 
@@ -25,7 +29,16 @@ class LikesCommentsInfo extends StatelessWidget {
     return Container(
       child: Row(
         children: <Widget>[
-          Icon(Icons.favorite_outline, size: size, color: iconColor,),
+          InkWell(
+            onTap: () {
+              onPressedFn();
+            },
+            child: Icon(
+              isLiked? Icons.favorite : Icons.favorite_outline, 
+              size: size, 
+              color: isLiked ? Colors.red : iconColor,
+            ),
+          ),
           const Padding(padding: EdgeInsets.only(right: 4.0)),
           Text('$numOfLikes', style: TextStyle(fontSize: fontSize, color: textColor),),
           const Padding(padding: EdgeInsets.only(right: 10.0)),

@@ -10,8 +10,7 @@ class User {
   User({
     required this.userId,
     required this.firstName,
-    required this.lastName,
-    
+    this.lastName = "",
   });
 
   String getUserId() => userId;

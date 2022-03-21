@@ -1,128 +1,123 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../widgets/community_module/featured_post.dart';
 import './individual_post.dart';
-
-import '../model/category.dart';
 import '../model/post.dart';
 import '../model/user.dart';
+import '../model/category.dart';
 import '../model/comment.dart';
 
+class CategoryPosts extends StatefulWidget {
+  final Category category;
 
-class CategoryPosts extends StatelessWidget {
+  CategoryPosts({Key? key, required this.category}) : super(key: key);
 
-  static User currUser = User(userId: '123abc', firstName: 'Thiago', lastName: 'Lee');
-  
-  static Post post1 = Post(
-    user: currUser, 
-    title: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", 
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tincidunt metus, vel sodales magna. Etiam vestibulum lacinia ultricies. Phasellus non aliquam est. Aenean id risus sed urna cursus rutrum. Vestibulum ex lectus, tempor in enim quis, pretium aliquam enim. Cras accumsan pulvinar ex et luctus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum aliquam libero at nulla volutpat, sit amet malesuada tellus hendrerit. Sed ornare finibus lacinia. Suspendisse congue imperdiet ante quis gravida. Morbi semper ipsum sit amet metus fermentum finibus sit amet et est. In finibus turpis eu pellentesque venenatis. \n \n Nunc eu sagittis nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque iaculis, diam sed ullamcorper aliquam, purus nulla molestie urna, gravida consectetur enim dui a odio. Pellentesque malesuada tortor ac lectus euismod, eget efficitur tortor congue. Sed non quam nec purus bibendum mattis. Phasellus at risus porta, sagittis ipsum ac, placerat erat. Vivamus nunc felis, vehicula at fermentum in, placerat at purus. Donec tristique enim quis tellus finibus, sed molestie mi elementum.", 
-    datePosted: DateTime.parse("2022-02-14 23:24:38"), 
-    numOfLikes: 10, 
-    comments: [
-      Comment(user: currUser, comment: "Remy was not a joke.", datePosted: DateTime.parse("2022-03-18 23:26:38")),
-      Comment(user: currUser, comment: "The fact that remy didn't win proves that the system is rigged and corrupt.", datePosted: DateTime.parse("2022-03-18 23:28:38")),
-      Comment(user: currUser, comment: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", datePosted: DateTime.now()),
-  ]);  
-  static Post post2 = Post(
-    user: currUser, 
-    title: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", 
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tincidunt metus, vel sodales magna. Etiam vestibulum lacinia ultricies. Phasellus non aliquam est. Aenean id risus sed urna cursus rutrum. Vestibulum ex lectus, tempor in enim quis, pretium aliquam enim. Cras accumsan pulvinar ex et luctus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum aliquam libero at nulla volutpat, sit amet malesuada tellus hendrerit. Sed ornare finibus lacinia. Suspendisse congue imperdiet ante quis gravida. Morbi semper ipsum sit amet metus fermentum finibus sit amet et est. In finibus turpis eu pellentesque venenatis. \n \n Nunc eu sagittis nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque iaculis, diam sed ullamcorper aliquam, purus nulla molestie urna, gravida consectetur enim dui a odio. Pellentesque malesuada tortor ac lectus euismod, eget efficitur tortor congue. Sed non quam nec purus bibendum mattis. Phasellus at risus porta, sagittis ipsum ac, placerat erat. Vivamus nunc felis, vehicula at fermentum in, placerat at purus. Donec tristique enim quis tellus finibus, sed molestie mi elementum.", 
-    datePosted: DateTime.parse("2022-02-14 23:24:38"), 
-    numOfLikes: 10, 
-    comments: [
-      Comment(user: currUser, comment: "Remy was not a joke.", datePosted: DateTime.parse("2022-03-18 23:26:38")),
-      Comment(user: currUser, comment: "The fact that remy didn't win proves that the system is rigged and corrupt.", datePosted: DateTime.parse("2022-03-18 23:28:38")),
-      Comment(user: currUser, comment: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", datePosted: DateTime.now()),
-  ]);  
-  static Post post3 = Post(
-    user: currUser, 
-    title: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", 
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tincidunt metus, vel sodales magna. Etiam vestibulum lacinia ultricies. Phasellus non aliquam est. Aenean id risus sed urna cursus rutrum. Vestibulum ex lectus, tempor in enim quis, pretium aliquam enim. Cras accumsan pulvinar ex et luctus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum aliquam libero at nulla volutpat, sit amet malesuada tellus hendrerit. Sed ornare finibus lacinia. Suspendisse congue imperdiet ante quis gravida. Morbi semper ipsum sit amet metus fermentum finibus sit amet et est. In finibus turpis eu pellentesque venenatis. \n \n Nunc eu sagittis nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque iaculis, diam sed ullamcorper aliquam, purus nulla molestie urna, gravida consectetur enim dui a odio. Pellentesque malesuada tortor ac lectus euismod, eget efficitur tortor congue. Sed non quam nec purus bibendum mattis. Phasellus at risus porta, sagittis ipsum ac, placerat erat. Vivamus nunc felis, vehicula at fermentum in, placerat at purus. Donec tristique enim quis tellus finibus, sed molestie mi elementum.", 
-    datePosted: DateTime.parse("2022-02-14 23:24:38"), 
-    numOfLikes: 10, 
-    comments: [
-      Comment(user: currUser, comment: "Remy was not a joke.", datePosted: DateTime.parse("2022-03-18 23:26:38")),
-      Comment(user: currUser, comment: "The fact that remy didn't win proves that the system is rigged and corrupt.", datePosted: DateTime.parse("2022-03-18 23:28:38")),
-      Comment(user: currUser, comment: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", datePosted: DateTime.now()),
-  ]);  
-  static Post post4 = Post(
-    user: currUser, 
-    title: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", 
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tincidunt metus, vel sodales magna. Etiam vestibulum lacinia ultricies. Phasellus non aliquam est. Aenean id risus sed urna cursus rutrum. Vestibulum ex lectus, tempor in enim quis, pretium aliquam enim. Cras accumsan pulvinar ex et luctus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum aliquam libero at nulla volutpat, sit amet malesuada tellus hendrerit. Sed ornare finibus lacinia. Suspendisse congue imperdiet ante quis gravida. Morbi semper ipsum sit amet metus fermentum finibus sit amet et est. In finibus turpis eu pellentesque venenatis. \n \n Nunc eu sagittis nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque iaculis, diam sed ullamcorper aliquam, purus nulla molestie urna, gravida consectetur enim dui a odio. Pellentesque malesuada tortor ac lectus euismod, eget efficitur tortor congue. Sed non quam nec purus bibendum mattis. Phasellus at risus porta, sagittis ipsum ac, placerat erat. Vivamus nunc felis, vehicula at fermentum in, placerat at purus. Donec tristique enim quis tellus finibus, sed molestie mi elementum.", 
-    datePosted: DateTime.parse("2022-02-14 23:24:38"), 
-    numOfLikes: 10, 
-    comments: [
-      Comment(user: currUser, comment: "Remy was not a joke.", datePosted: DateTime.parse("2022-03-18 23:26:38")),
-      Comment(user: currUser, comment: "The fact that remy didn't win proves that the system is rigged and corrupt.", datePosted: DateTime.parse("2022-03-18 23:28:38")),
-      Comment(user: currUser, comment: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", datePosted: DateTime.now()),
-  ]);  
-  static Post post5 = Post(
-    user: currUser, 
-    title: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", 
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tincidunt metus, vel sodales magna. Etiam vestibulum lacinia ultricies. Phasellus non aliquam est. Aenean id risus sed urna cursus rutrum. Vestibulum ex lectus, tempor in enim quis, pretium aliquam enim. Cras accumsan pulvinar ex et luctus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum aliquam libero at nulla volutpat, sit amet malesuada tellus hendrerit. Sed ornare finibus lacinia. Suspendisse congue imperdiet ante quis gravida. Morbi semper ipsum sit amet metus fermentum finibus sit amet et est. In finibus turpis eu pellentesque venenatis. \n \n Nunc eu sagittis nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque iaculis, diam sed ullamcorper aliquam, purus nulla molestie urna, gravida consectetur enim dui a odio. Pellentesque malesuada tortor ac lectus euismod, eget efficitur tortor congue. Sed non quam nec purus bibendum mattis. Phasellus at risus porta, sagittis ipsum ac, placerat erat. Vivamus nunc felis, vehicula at fermentum in, placerat at purus. Donec tristique enim quis tellus finibus, sed molestie mi elementum.", 
-    datePosted: DateTime.parse("2022-02-14 23:24:38"), 
-    numOfLikes: 10, 
-    comments: [
-      Comment(user: currUser, comment: "Remy was not a joke.", datePosted: DateTime.parse("2022-03-18 23:26:38")),
-      Comment(user: currUser, comment: "The fact that remy didn't win proves that the system is rigged and corrupt.", datePosted: DateTime.parse("2022-03-18 23:28:38")),
-      Comment(user: currUser, comment: "O que vocês gostariam de encontrar numa consultoria de investimentos/finanças pessoais? Estou estruturando uma e respeito bastante a opinião do sub, gostaria de saber mais.", datePosted: DateTime.now()),
-  ]);  
-  
+  @override
+  State<CategoryPosts> createState() => _CategoryPostsState();
+}
 
-  Category category = Category(
-    title: "Nectarfy Hives", 
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tincidunt metus, vel sodales magna. Etiam vestibulum lacinia ultricies. Phasellus non aliquam est. Aenean id risus sed urna cursus rutrum. Vestibulum ex lectus, tempor in enim quis, pretium aliquam enim.", 
-    posts: [post1, post2, post3, post4, post5]
-  );
-
-  CategoryPosts({ Key? key }) : super(key: key);
+class _CategoryPostsState extends State<CategoryPosts> {
+  List<Widget> list = <Widget>[];
+  bool loaded = false;
 
   @override
   Widget build(BuildContext context) {
-
-    void _handlePost() {
-      Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => const IndividualPost())
-      );
+    void _handlePost(Post post) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => IndividualPost(post: post)));
     }
 
-    Widget getPostsWidgets(List<Post> posts) {
-      List<Widget> list = <Widget>[];
-      for(int i = 0; i < posts.length; i++){
-        list.add(FeaturedPost(post: posts[i], onPressedFn: _handlePost,));
+    void _initState() async {
+      try {
+        final url = Uri.parse(
+            'https://flutterauthnectarfy.herokuapp.com/post/category/${widget.category.getId()}');
+        final response = await http.get(url);
+        final posts = json.decode(response.body) as List<dynamic>;
+
+        for (var post in posts) {
+          List<dynamic> temp = post['likes'];
+          List<String> likes = [];
+          for (var like in temp) {
+            likes.add(like['user']);
+          }
+
+          List<dynamic> temp2 = post['comments'];
+          List<Comment> comments = [];
+          for (var comment in temp2) {
+            final User u =
+                User(userId: comment['userId'], firstName: comment['username']);
+            final Comment c = Comment(
+                user: u,
+                comment: comment['comment'],
+                datePosted: DateTime.parse(comment['datePosted']));
+            comments.add(c);
+          }
+
+          final User u =
+              User(userId: post['user'], firstName: post['username']);
+          final Post tempPost = Post(
+              id: post['_id'],
+              user: u,
+              title: post['title'],
+              description: post['description'],
+              datePosted: DateTime.parse(post['datePosted']),
+              categoryId: post['category'],
+              likes: likes,
+              comments: comments);
+
+          list.add(FeaturedPost(post: tempPost, onPressedFn: _handlePost));
+        }
+
+        setState(() {
+          loaded = true;
+        });
+
+        //iterate
+      } catch (error) {
+        rethrow;
       }
-      return Column(children: list);
     }
+
+    !loaded ? _initState() : null;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Community"),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0, top: 25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(category.getTitle(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-              const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-              
-              Text('${category.getPosts().length} post(s)', style: TextStyle(color: Colors.grey.withOpacity(0.95)),),
-              const Padding(padding: EdgeInsets.only(bottom: 4.0)),
-      
-              Text(category.getDescription()),
-              const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-              
-              const Text("All posts", style: TextStyle(fontWeight: FontWeight.bold),),
-              const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-              getPostsWidgets(category.getPosts()),
-            ],
-          )
+        appBar: AppBar(
+          title: const Text("Community"),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
-      )
-    );
+        body: SingleChildScrollView(
+            child: Container(
+                padding: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, bottom: 12.0, top: 25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.category.getTitle(),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                    Text(
+                      '${list.length} post(s)',
+                      style: TextStyle(color: Colors.grey.withOpacity(0.95)),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                    Text(widget.category.getDescription()),
+                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                    const Text(
+                      "All posts",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                    !loaded
+                        ? const Text("LOADING!")
+                        : Column(
+                            children: list,
+                          )
+                  ],
+                ))));
   }
 }
