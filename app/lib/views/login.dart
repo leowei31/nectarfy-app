@@ -1,4 +1,5 @@
 // import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -33,18 +34,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 150,
                   width: 150),
               TextField(
-                decoration: InputDecoration(labelText: 'Username'),
-                onChanged: (val) {
-                  name = val;
-                },
-              ),
+                  decoration: InputDecoration(labelText: 'Username'),
+                  onChanged: (val) {
+                    name = val;
+                  },
+                  inputFormatters: [FilteringTextInputFormatter.deny(' ')]),
               TextField(
-                obscureText: true,
-                decoration: InputDecoration(labelText: 'Password'),
-                onChanged: (val) {
-                  password = val;
-                },
-              ),
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: 'Password'),
+                  onChanged: (val) {
+                    password = val;
+                  },
+                  inputFormatters: [FilteringTextInputFormatter.deny(' ')]),
               Column(
                 children: [
                   ElevatedButton(
