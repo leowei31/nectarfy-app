@@ -72,76 +72,116 @@ class _CommunityModuleState extends State<CommunityModule> {
       try {
         final response = await http.get(url);
         final arrResponse = json.decode(response.body) as List<dynamic>;
+        
         final response2 = await http.get(hurl);
         final arrResponse2 = json.decode(response2.body) as List<dynamic>;
-        List<dynamic> likeR = arrResponse2[0]['likes'];
-        List<dynamic> likeH = arrResponse2[1]['likes'];
-        List<String> like1 = [];
-        List<String> like2 = [];
-        List<dynamic> commentR = arrResponse2[0]['comments'];
-        List<dynamic> commentH = arrResponse2[1]['comments'];
-        List<Comment> comments1 = [];
-        List<Comment> comments2 = [];
-        for (var like in likeR) {
-          print(like);
-          like1.add(like['user'].toString());
-        }
-        for (var like in likeH) {
-          like2.add(like['user'].toString());
-        }
-        for (var comment in commentH) {
-          comments1.add(Comment(
-              user: User(
-                  userId: comment['userId'], firstName: comment['username']),
-              comment: comment['comment'],
-              datePosted: DateTime.parse(comment['datePosted'])));
-        }
-        for (var comment in commentR) {
-          comments2.add(Comment(
-              user: User(
-                  userId: comment['userId'], firstName: comment['username']),
-              comment: comment['comment'],
-              datePosted: DateTime.parse(comment['datePosted'])));
+
+        final featuredPosts = [];
+        for (var post in arrResponse2) {
+          List<dynamic> temp = post['likes'];
+          List<String> likes = [];
+          for (var like in temp) {
+            likes.add(like['user']);
+          }
+
+          List<dynamic> temp2 = post['comments'];
+          List<Comment> comments = [];
+          for (var comment in temp2) {
+            final User u =
+                User(userId: comment['userId'], firstName: comment['username']);
+            final Comment c = Comment(
+                user: u,
+                comment: comment['comment'],
+                datePosted: DateTime.parse(comment['datePosted']));
+            comments.add(c);
+          }
+
+          final User u =
+              User(userId: post['user'], firstName: post['username']);
+          final Post tempPost = Post(
+              id: post['_id'],
+              user: u,
+              title: post['title'],
+              description: post['description'],
+              datePosted: DateTime.parse(post['datePosted']),
+              categoryId: post['category'],
+              likes: likes,
+              comments: comments
+            );
+          
+          featuredPosts.add(tempPost);
+          
         }
 
-        final recentPostTemp = Post(
-            id: arrResponse2[0]['_id'],
-            user: User(
-                userId: arrResponse2[0]['user'],
-                firstName: arrResponse2[0]['username']),
-            title: arrResponse2[0]['title'],
-            description: arrResponse2[0]['description'],
-            datePosted: DateTime.parse(arrResponse2[0]['datePosted']),
-            categoryId: arrResponse2[0]['category'].toString(),
-            likes: arrResponse2[0]['likes'],
-            comments: arrResponse2[0]['comments']);
-        final hottestPostTemp = Post(
-            id: arrResponse2[1]['_id'],
-            user: User(
-                userId: arrResponse2[1]['user'],
-                firstName: arrResponse2[1]['username']),
-            title: arrResponse2[1]['title'],
-            description: arrResponse2[1]['description'],
-            datePosted: DateTime.parse(arrResponse2[1]['datePosted']),
-            categoryId: arrResponse2[1]['category'].toString(),
-            likes: arrResponse2[1]['likes'],
-            comments: arrResponse2[1]['comments']);
 
-        for (var element in arrResponse) {
-          final Category temp = Category(
-              id: element['_id'],
-              title: element['title'],
-              description: element['description']);
-          cats.add(SingleCategory(
-            category: temp,
-            onPressedFn: _handleCategory,
-          ));
-        }
+        // List<dynamic> likeR = arrResponse2[0]['likes'];
+        // List<dynamic> likeH = arrResponse2[1]['likes'];
+        // List<String> like1 = [];
+        // List<String> like2 = [];
+        // List<dynamic> commentR = arrResponse2[0]['comments'];
+        // List<dynamic> commentH = arrResponse2[1]['comments'];
+        // List<Comment> comments1 = [];
+        // List<Comment> comments2 = [];
+        // for (var like in likeR) {
+        //   print(like);
+        //   like1.add(like['user'].toString());
+        // }
+        // for (var like in likeH) {
+        //   like2.add(like['user'].toString());
+        // }
+        // for (var comment in commentH) {
+        //   comments1.add(Comment(
+        //       user: User(
+        //           userId: comment['userId'], firstName: comment['username']),
+        //       comment: comment['comment'],
+        //       datePosted: DateTime.parse(comment['datePosted'])));
+        // }
+        // for (var comment in commentR) {
+        //   comments2.add(Comment(
+        //       user: User(
+        //           userId: comment['userId'], firstName: comment['username']),
+        //       comment: comment['comment'],
+        //       datePosted: DateTime.parse(comment['datePosted'])));
+        // }
+
+        // final recentPostTemp = Post(
+        //     id: arrResponse2[0]['_id'],
+        //     user: User(
+        //         userId: arrResponse2[0]['user'],
+        //         firstName: arrResponse2[0]['username']),
+        //     title: arrResponse2[0]['title'],
+        //     description: arrResponse2[0]['description'],
+        //     datePosted: DateTime.parse(arrResponse2[0]['datePosted']),
+        //     categoryId: arrResponse2[0]['category'].toString(),
+        //     likes: arrResponse2[0]['likes'],
+        //     comments: arrResponse2[0]['comments']);
+        // final hottestPostTemp = Post(
+        //     id: arrResponse2[1]['_id'],
+        //     user: User(
+        //         userId: arrResponse2[1]['user'],
+        //         firstName: arrResponse2[1]['username']),
+        //     title: arrResponse2[1]['title'],
+        //     description: arrResponse2[1]['description'],
+        //     datePosted: DateTime.parse(arrResponse2[1]['datePosted']),
+        //     categoryId: arrResponse2[1]['category'].toString(),
+        //     likes: arrResponse2[1]['likes'],
+        //     comments: arrResponse2[1]['comments']);
+
+        // for (var element in arrResponse) {
+        //   final Category temp = Category(
+        //       id: element['_id'],
+        //       title: element['title'],
+        //       description: element['description']);
+        //   cats.add(SingleCategory(
+        //     category: temp,
+        //     onPressedFn: _handleCategory,
+        //   ));
+        // }
 
         setState(() {
           isLoaded = true;
-          recentPost = recentPostTemp;
-          hottestPost = hottestPostTemp;
+          recentPost = featuredPosts[0];
+          hottestPost = featuredPosts[1];
         });
       } catch (error) {
         throw (error);
