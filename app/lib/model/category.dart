@@ -1,12 +1,11 @@
 import './post.dart';
 
 class Category {
-
   final String id;
   final String title;
   final String description;
 
-  Category ({
+  Category({
     required this.id,
     required this.title,
     required this.description,
@@ -15,5 +14,4 @@ class Category {
   String getId() => id;
   String getTitle() => title;
   String getDescription() => description;
-
 }

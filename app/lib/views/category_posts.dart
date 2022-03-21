@@ -10,36 +10,32 @@ import '../model/category.dart';
 import '../model/comment.dart';
 
 class CategoryPosts extends StatefulWidget {
-
   final Category category;
 
-  CategoryPosts({ Key? key, required this.category }) : super(key: key);
+  CategoryPosts({Key? key, required this.category}) : super(key: key);
 
   @override
   State<CategoryPosts> createState() => _CategoryPostsState();
 }
 
 class _CategoryPostsState extends State<CategoryPosts> {
-
   List<Widget> list = <Widget>[];
   bool loaded = false;
 
   @override
   Widget build(BuildContext context) {
-
     void _handlePost(Post post) {
-      Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => IndividualPost(post: post))
-      );
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => IndividualPost(post: post)));
     }
 
     void _initState() async {
       try {
-        final url = Uri.parse('https://flutterauthnectarfy.herokuapp.com/post/category/${widget.category.getId()}');
+        final url = Uri.parse(
+            'https://flutterauthnectarfy.herokuapp.com/post/category/${widget.category.getId()}');
         final response = await http.get(url);
         final posts = json.decode(response.body) as List<dynamic>;
-        
+
         for (var post in posts) {
           List<dynamic> temp = post['likes'];
           List<String> likes = [];
@@ -50,25 +46,28 @@ class _CategoryPostsState extends State<CategoryPosts> {
           List<dynamic> temp2 = post['comments'];
           List<Comment> comments = [];
           for (var comment in temp2) {
-            final User u = User(userId: comment['userId'], firstName: comment['username']);
-            final Comment c = Comment(user: u, comment: comment['comment'], datePosted: DateTime.parse(comment['datePosted']));
+            final User u =
+                User(userId: comment['userId'], firstName: comment['username']);
+            final Comment c = Comment(
+                user: u,
+                comment: comment['comment'],
+                datePosted: DateTime.parse(comment['datePosted']));
             comments.add(c);
           }
 
-          final User u = User(userId: post['user'], firstName: post['username']);
+          final User u =
+              User(userId: post['user'], firstName: post['username']);
           final Post tempPost = Post(
-            id: post['_id'],
-            user: u, 
-            title: post['title'], 
-            description: post['description'], 
-            datePosted: DateTime.parse(post['datePosted']),
-            categoryId: post['category'],
-            likes: likes, 
-            comments: comments
-          );
+              id: post['_id'],
+              user: u,
+              title: post['title'],
+              description: post['description'],
+              datePosted: DateTime.parse(post['datePosted']),
+              categoryId: post['category'],
+              likes: likes,
+              comments: comments);
 
           list.add(FeaturedPost(post: tempPost, onPressedFn: _handlePost));
-
         }
 
         setState(() {
@@ -84,34 +83,41 @@ class _CategoryPostsState extends State<CategoryPosts> {
     !loaded ? _initState() : null;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Community"),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0, top: 25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(widget.category.getTitle(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-              const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-              
-              Text('${list.length} post(s)', style: TextStyle(color: Colors.grey.withOpacity(0.95)),),
-              const Padding(padding: EdgeInsets.only(bottom: 4.0)),
-
-              Text(widget.category.getDescription()),
-              const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-              
-              const Text("All posts", style: TextStyle(fontWeight: FontWeight.bold),),
-              const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-              !loaded ? const Text("LOADING!") : Column(
-                children: list,
-              )
-            ],
-          )
+        appBar: AppBar(
+          title: const Text("Community"),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
-      )
-    );
+        body: SingleChildScrollView(
+            child: Container(
+                padding: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, bottom: 12.0, top: 25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.category.getTitle(),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                    Text(
+                      '${list.length} post(s)',
+                      style: TextStyle(color: Colors.grey.withOpacity(0.95)),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                    Text(widget.category.getDescription()),
+                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                    const Text(
+                      "All posts",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                    !loaded
+                        ? const Text("LOADING!")
+                        : Column(
+                            children: list,
+                          )
+                  ],
+                ))));
   }
 }
