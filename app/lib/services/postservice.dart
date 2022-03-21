@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PostService {
   Dio dio = new Dio();
 
-  newPost(title, description, userid) async {
+  newPost(title, description, userid, categoryid) async {
     try {
       return await dio.post('https://flutterauthnectarfy.herokuapp.com/post',
           data: {
@@ -12,6 +12,7 @@ class PostService {
             'title': title,
             'description': description,
             'datePosted': '${DateTime.now()}',
+            'category': '${categoryid}',
             'likes': [],
             'comments': []
           },

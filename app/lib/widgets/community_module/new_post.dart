@@ -1,3 +1,4 @@
+import 'package:app/widgets/community_module/single_category.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
@@ -5,9 +6,11 @@ import 'package:provider/provider.dart';
 
 import '../../provider/user_provider.dart';
 import '../../services/postservice.dart';
+import '../../model/category.dart';
 
 class NewPost extends StatefulWidget {
   const NewPost({Key? key}) : super(key: key);
+
   @override
   State<NewPost> createState() => _NewPostState();
 }
@@ -15,14 +18,42 @@ class NewPost extends StatefulWidget {
 class _NewPostState extends State<NewPost> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  String _category = 'General';
-  DateTime _time = DateTime.now();
+  final DateTime _time = DateTime.now();
   bool _canpost = false;
+  final List<Category> _cats = [
+    Category(
+        id: "623762c997281c2f96b8d294",
+        title: "Climate Control",
+        description: "orem ipsum dolor sit amet, c"),
+    Category(
+        id: "623762d197281c2f96b8d296",
+        title: "Varroa Mite Management",
+        description: "Lorem ipsum dolor sit amet, "),
+    Category(
+        id: "623762db97281c2f96b8d298",
+        title: "Nectarfy Hives",
+        description: "Lorem ipsum dolor sit amet,"),
+    Category(
+        id: "623762f297281c2f96b8d29e",
+        title: "Bees Dying",
+        description: "Lorem ipsum dolor sit amet,")
+  ];
+
+  String _category = "Climate Control";
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final _userid = context.watch<UserState>().userid;
+    List<String> _cattitle = [];
+    for (var cat in _cats) {
+      _cattitle.add(cat.title);
+    }
+    Map _catnameid = {};
+    for (var cat in _cats) {
+      _catnameid[cat.title] = cat.id;
+    }
+    print(_cats.length);
 
     _titleController.addListener(() {
       if (_titleController.text.isEmpty) {
@@ -105,7 +136,7 @@ class _NewPostState extends State<NewPost> {
                   height: 10,
                 ),
                 DropdownButton<String>(
-                  value: _category,
+                  value: _category.isNotEmpty ? _category : null,
                   icon: const Icon(Icons.arrow_downward),
                   elevation: 16,
                   style: const TextStyle(color: Colors.black),
@@ -118,12 +149,8 @@ class _NewPostState extends State<NewPost> {
                       _category = newValue!;
                     });
                   },
-                  items: <String>[
-                    'General',
-                    'Climate',
-                    'Feeding',
-                    'Varroa Mites'
-                  ].map<DropdownMenuItem<String>>((String value) {
+                  items:
+                      _cattitle.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -152,8 +179,11 @@ class _NewPostState extends State<NewPost> {
                       onPressed: _canpost
                           ? () {
                               PostService()
-                                  .newPost(_titleController.text,
-                                      _descriptionController.text, _userid)
+                                  .newPost(
+                                      _titleController.text,
+                                      _descriptionController.text,
+                                      _userid,
+                                      _catnameid[_category])
                                   .then((val) {
                                 if (val.data['success']) {
                                   print('success');

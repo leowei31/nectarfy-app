@@ -9,18 +9,21 @@ class ProfileModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: Column(
-        children: [
-          Text("Personal"),
-          RaisedButton(
-              child: Text('Logout'),
-              onPressed: () => context.read<UserState>().logoutsuccess()),
-          context.watch<UserState>().loggedin
-              ? const Text('Loggedin')
-              : const Text('noo')
-        ],
+          backgroundColor: Theme.of(context).primaryColor,
+          title: const Text("Personal")),
+      body: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            context.watch<UserState>().loggedin
+                ? Text("Hello " + context.read<UserState>().username)
+                : const Text('noo'),
+            RaisedButton(
+                child: Text('Logout'),
+                onPressed: () => context.read<UserState>().logoutsuccess()),
+          ],
+        ),
       ),
     );
   }
