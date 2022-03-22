@@ -27,6 +27,7 @@ class _CommunityModuleState extends State<CommunityModule> {
   final List<SingleCategory> cats = [];
   late Post recentPost;
   late Post hottestPost;
+  final List<Category> justcats = [];
 
   void _addNewPost(BuildContext context) {
     showModalBottomSheet(
@@ -38,9 +39,11 @@ class _CommunityModuleState extends State<CommunityModule> {
             child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-                  child: NewPost(),
+                  child: NewPost(
+                    cats: justcats as List<Category>,
+                  ),
                 )),
           );
         });
@@ -116,6 +119,7 @@ class _CommunityModuleState extends State<CommunityModule> {
               id: element['_id'],
               title: element['title'],
               description: element['description']);
+          justcats.add(temp);
           cats.add(SingleCategory(
             category: temp,
             onPressedFn: _handleCategory,
@@ -187,7 +191,9 @@ class _CommunityModuleState extends State<CommunityModule> {
                         post: recentPost,
                         onPressedFn: _handlePost,
                       )
-                    : CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+                    : CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
 
                 const Padding(padding: EdgeInsets.only(bottom: 15)),
 
@@ -207,7 +213,9 @@ class _CommunityModuleState extends State<CommunityModule> {
                         post: hottestPost,
                         onPressedFn: _handlePost,
                       )
-                    : CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+                    : CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
 
                 const Padding(padding: EdgeInsets.only(bottom: 15)),
 
@@ -221,7 +229,9 @@ class _CommunityModuleState extends State<CommunityModule> {
                   ),
                 ),
                 !isLoaded
-                    ? CircularProgressIndicator(color: Theme.of(context).primaryColor,)
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      )
                     : Expanded(
                         child: GridView.count(
                           crossAxisCount: 3,

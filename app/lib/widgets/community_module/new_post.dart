@@ -9,7 +9,9 @@ import '../../services/postservice.dart';
 import '../../model/category.dart';
 
 class NewPost extends StatefulWidget {
-  const NewPost({Key? key}) : super(key: key);
+  const NewPost({Key? key, required this.cats}) : super(key: key);
+
+  final List<Category> cats;
 
   @override
   State<NewPost> createState() => _NewPostState();
@@ -19,24 +21,6 @@ class _NewPostState extends State<NewPost> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   bool _canpost = false;
-  final List<Category> _cats = [
-    Category(
-        id: "623762c997281c2f96b8d294",
-        title: "Climate Control",
-        description: "orem ipsum dolor sit amet, c"),
-    Category(
-        id: "623762d197281c2f96b8d296",
-        title: "Varroa Mite Management",
-        description: "Lorem ipsum dolor sit amet, "),
-    Category(
-        id: "623762db97281c2f96b8d298",
-        title: "Nectarfy Hives",
-        description: "Lorem ipsum dolor sit amet,"),
-    Category(
-        id: "623762f297281c2f96b8d29e",
-        title: "Bees Dying",
-        description: "Lorem ipsum dolor sit amet,")
-  ];
 
   String _category = "Climate Control";
 
@@ -45,14 +29,14 @@ class _NewPostState extends State<NewPost> {
     final mediaQuery = MediaQuery.of(context);
     final _userid = context.watch<UserState>().userid;
     List<String> _cattitle = [];
-    for (var cat in _cats) {
+    for (var cat in widget.cats) {
       _cattitle.add(cat.title);
     }
     Map _catnameid = {};
-    for (var cat in _cats) {
+    for (var cat in widget.cats) {
       _catnameid[cat.title] = cat.id;
     }
-    print(_cats.length);
+    print(widget.cats.length);
 
     _titleController.addListener(() {
       if (_titleController.text.isEmpty) {
