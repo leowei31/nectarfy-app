@@ -35,6 +35,8 @@ class _IndividualPostState extends State<IndividualPost> {
     final User user = User(
         userId: context.watch<UserState>().userid.toString(),
         firstName: context.watch<UserState>().username);
+    print("USER IDDDD");
+    print(user.getUserId());
 
     void _initialState() {
       for (int i = 0; i < widget.post.comments.length; i++) {
@@ -62,7 +64,8 @@ class _IndividualPostState extends State<IndividualPost> {
           'comment': comment.getComment(),
           'datePosted': comment.getDatePosted().toString(),
         });
-        await http.post(url, headers: headers, body: body);
+        final response = await http.post(url, headers: headers, body: body);
+        print(response.body);
         list.insert(0, CommentCard(comment: comment));
         widget.post.getComments().insert(0, comment);
       } catch (error) {

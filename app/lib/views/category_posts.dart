@@ -113,7 +113,7 @@ class _CategoryPostsState extends State<CategoryPosts> {
                     ),
                     const Padding(padding: EdgeInsets.only(bottom: 25.0)),
                     !loaded
-                        ? const Text("LOADING!")
+                        ? CircularProgressIndicator(color: Theme.of(context).primaryColor,)
                         : Column(
                             children: list,
                           )
