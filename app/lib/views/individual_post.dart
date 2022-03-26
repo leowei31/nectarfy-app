@@ -15,8 +15,9 @@ import '../model/comment.dart';
 
 class IndividualPost extends StatefulWidget {
   final Post post;
+  final Function onReload;
 
-  const IndividualPost({Key? key, required this.post}) : super(key: key);
+  const IndividualPost({Key? key, required this.post, required this.onReload}) : super(key: key);
 
   @override
   State<IndividualPost> createState() => _IndividualPostState();
@@ -141,40 +142,47 @@ class _IndividualPostState extends State<IndividualPost> {
           title: const Text("Community"),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  UserInfoHeader(
-                      user: widget.post.user,
-                      datePosted: widget.post.getDatePosted()),
-                  const Padding(padding: EdgeInsets.only(bottom: 10)),
-                  Text(widget.post.getTitle(),
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  const Padding(padding: EdgeInsets.only(bottom: 15)),
-                  Text(widget.post.getDescription(),
-                      style: const TextStyle(fontSize: 14)),
-                  const Padding(padding: EdgeInsets.only(bottom: 10)),
-                  LikesCommentsInfo(
-                    numOfLikes: widget.post.likes.length,
-                    numOfComments: list.length,
-                    isLiked: isLiked,
-                    onPressedFn: _handleLikeButton,
-                  ),
-                  const Padding(padding: EdgeInsets.only(bottom: 25)),
-
-                  //COMMENT SECTION
-                  const Text("Comments",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  const Padding(padding: EdgeInsets.only(bottom: 10)),
-                  Column(
-                    children: list,
-                  )
-                ],
+        body: WillPopScope(
+          onWillPop: () async {
+            Navigator.pop(context, false);
+            widget.onReload();
+            return true;        
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    UserInfoHeader(
+                        user: widget.post.user,
+                        datePosted: widget.post.getDatePosted()),
+                    const Padding(padding: EdgeInsets.only(bottom: 10)),
+                    Text(widget.post.getTitle(),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Padding(padding: EdgeInsets.only(bottom: 15)),
+                    Text(widget.post.getDescription(),
+                        style: const TextStyle(fontSize: 14)),
+                    const Padding(padding: EdgeInsets.only(bottom: 10)),
+                    LikesCommentsInfo(
+                      numOfLikes: widget.post.likes.length,
+                      numOfComments: list.length,
+                      isLiked: isLiked,
+                      onPressedFn: _handleLikeButton,
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 25)),
+        
+                    //COMMENT SECTION
+                    const Text("Comments",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Padding(padding: EdgeInsets.only(bottom: 10)),
+                    Column(
+                      children: list,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

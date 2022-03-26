@@ -28,6 +28,7 @@ class _CommunityModuleState extends State<CommunityModule> {
   late Post recentPost;
   late Post hottestPost;
   final List<Category> justcats = [];
+  bool reloadPage = false;
 
   void _addNewPost(BuildContext context) {
     showModalBottomSheet(
@@ -40,9 +41,9 @@ class _CommunityModuleState extends State<CommunityModule> {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
                   child: NewPost(
-                    cats: justcats as List<Category>,
+                    cats: justcats,
                   ),
                 )),
           );
@@ -53,9 +54,15 @@ class _CommunityModuleState extends State<CommunityModule> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
+    void _onPageReturn() {
+      setState(() {
+        reloadPage = !reloadPage;
+      });
+    }
+
     void _handlePost(Post post) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => IndividualPost(post: post)));
+          MaterialPageRoute(builder: (context) => IndividualPost(post: post, onReload: _onPageReturn)));
     }
 
     void _handleCategory(Category cat) {
@@ -64,6 +71,7 @@ class _CommunityModuleState extends State<CommunityModule> {
           MaterialPageRoute(
               builder: (context) => CategoryPosts(
                     category: cat,
+                    onReload: _onPageReturn
                   )));
     }
 
@@ -132,7 +140,7 @@ class _CommunityModuleState extends State<CommunityModule> {
           hottestPost = featuredPosts[1];
         });
       } catch (error) {
-        throw (error);
+        rethrow;
       }
     }
 
@@ -189,7 +197,7 @@ class _CommunityModuleState extends State<CommunityModule> {
                 isLoaded
                     ? FeaturedPost(
                         post: recentPost,
-                        onPressedFn: _handlePost,
+                        onPressedFn: _handlePost
                       )
                     : CircularProgressIndicator(
                         color: Theme.of(context).primaryColor,
@@ -211,7 +219,7 @@ class _CommunityModuleState extends State<CommunityModule> {
                 isLoaded
                     ? FeaturedPost(
                         post: hottestPost,
-                        onPressedFn: _handlePost,
+                        onPressedFn: _handlePost
                       )
                     : CircularProgressIndicator(
                         color: Theme.of(context).primaryColor,

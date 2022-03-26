@@ -11,8 +11,9 @@ import '../model/comment.dart';
 
 class CategoryPosts extends StatefulWidget {
   final Category category;
+  final Function onReload;
 
-  CategoryPosts({Key? key, required this.category}) : super(key: key);
+  const CategoryPosts({Key? key, required this.category, required this.onReload}) : super(key: key);
 
   @override
   State<CategoryPosts> createState() => _CategoryPostsState();
@@ -21,12 +22,30 @@ class CategoryPosts extends StatefulWidget {
 class _CategoryPostsState extends State<CategoryPosts> {
   List<Widget> list = <Widget>[];
   bool loaded = false;
+  bool reloadPage = false;
+  List<Post> finalListOfPost = [];
+
 
   @override
   Widget build(BuildContext context) {
-    void _handlePost(Post post) {
+
+    void _onPageReturn() {
+      setState(() {
+        reloadPage = !reloadPage; 
+      });
+    }
+
+    void _handlePost(Post post) { 
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => IndividualPost(post: post)));
+          MaterialPageRoute(builder: (context) => IndividualPost(post: post, onReload: _onPageReturn)));
+    }
+
+    void _fetchPosts() {
+      List<Widget> tempList = <Widget>[];
+      for (var p in finalListOfPost) {
+        tempList.add(FeaturedPost(post: p, onPressedFn: _handlePost));
+      }
+      list = tempList;
     }
 
     void _initState() async {
@@ -66,8 +85,8 @@ class _CategoryPostsState extends State<CategoryPosts> {
               categoryId: post['category'],
               likes: likes,
               comments: comments);
-
-          list.add(FeaturedPost(post: tempPost, onPressedFn: _handlePost));
+          
+          finalListOfPost.add(tempPost);
         }
 
         setState(() {
@@ -80,44 +99,51 @@ class _CategoryPostsState extends State<CategoryPosts> {
       }
     }
 
-    !loaded ? _initState() : null;
+    !loaded ? _initState() : _fetchPosts();
 
     return Scaffold(
         appBar: AppBar(
           title: const Text("Community"),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: SingleChildScrollView(
-            child: Container(
-                padding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 12.0, top: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      widget.category.getTitle(),
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-                    Text(
-                      '${list.length} post(s)',
-                      style: TextStyle(color: Colors.grey.withOpacity(0.95)),
-                    ),
-                    const Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                    Text(widget.category.getDescription()),
-                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-                    const Text(
-                      "All posts",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const Padding(padding: EdgeInsets.only(bottom: 25.0)),
-                    !loaded
-                        ? CircularProgressIndicator(color: Theme.of(context).primaryColor,)
-                        : Column(
-                            children: list,
-                          )
-                  ],
-                ))));
+        body: WillPopScope(
+          onWillPop: () async {
+            Navigator.pop(context, false);
+            widget.onReload();
+            return true;            
+          },
+          child: SingleChildScrollView(
+              child: Container(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, right: 12.0, bottom: 12.0, top: 25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        widget.category.getTitle(),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                      Text(
+                        '${list.length} post(s)',
+                        style: TextStyle(color: Colors.grey.withOpacity(0.95)),
+                      ),
+                      const Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                      Text(widget.category.getDescription()),
+                      const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                      const Text(
+                        "All posts",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const Padding(padding: EdgeInsets.only(bottom: 25.0)),
+                      !loaded
+                          ? CircularProgressIndicator(color: Theme.of(context).primaryColor,)
+                          : Column(
+                              children: list,
+                            )
+                    ],
+                  ))),
+        ));
   }
 }
