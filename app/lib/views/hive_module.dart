@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
 import '../widgets/hive_module/dashboard/welcome_dashboard.dart';
 import '../widgets/hive_module/hive_list/hive_list.dart';
@@ -17,6 +19,36 @@ class HiveModule extends StatefulWidget {
 }
 
 class _HiveModuleState extends State<HiveModule> {
+
+  /// SEPARATOR
+  /// Method and field definition for bluetooth
+
+  static const platform = MethodChannel('samples.flutter.dev/temperature');
+
+  bool loaded = false;
+  num _temperatureLevel = -1;
+
+  Future<void> _getTemperatureLevel() async {
+    num temperatureLevel;
+    try {
+      temperatureLevel = await platform.invokeMethod('getTemperatureLevel'); 
+    } on PlatformException catch (e) {
+      temperatureLevel = -2;
+      print(e);
+    }
+
+    setState(() {
+      _temperatureLevel = temperatureLevel;
+      loaded = true;
+    });
+
+    print("TEMPERATURE IS $_temperatureLevel");
+  }
+
+  /// SEPARATOR
+  ///
+
+
   void _addHiveHandler(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -99,6 +131,9 @@ class _HiveModuleState extends State<HiveModule> {
     final mediaQuery = MediaQuery.of(context);
     final appbarHeight = AppBar().preferredSize.height;
     final username = context.watch<UserState>().username;
+
+    _temperatureLevel == -1 ? _getTemperatureLevel() : null;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,

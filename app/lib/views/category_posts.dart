@@ -31,11 +31,11 @@ class _CategoryPostsState extends State<CategoryPosts> {
 
     void _onPageReturn() {
       setState(() {
-        reloadPage = !reloadPage;
+        reloadPage = !reloadPage; 
       });
     }
 
-    void _handlePost({required Post post, bool update = false}) { 
+    void _handlePost(Post post) { 
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => IndividualPost(post: post, onReload: _onPageReturn)));
     }
