@@ -11,8 +11,8 @@ import os.log
     
   private var finalRes: CBCharacteristic?
     
-  private var temperature: String?
-  private var humidity: String?
+  private var temperature: String = ""
+  private var humidity: String = ""
     
   override func application(
     _ application: UIApplication,
@@ -43,8 +43,8 @@ import os.log
     private func receiveTemperatureLevel(result: @escaping FlutterResult) {
         centralManager = CBCentralManager(delegate: self, queue: nil)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { // Change `2.0` to the desired number of seconds.
-            result(self.temperature! + " " + self.humidity!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { // Change `2.0` to the desired number of seconds.
+            result(self.temperature + " " + self.humidity)
         }
         
     }

@@ -57,7 +57,7 @@ class HiveCard extends StatelessWidget {
                         const Padding(padding: EdgeInsets.only(right: 3.5)),
                         const Text('Current temperature: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                         Text(
-                          '${hive.getTemperature().toString()}º C',
+                          hive.getTemperature() == "Error" || hive.getTemperature() == "Loading" ? hive.getTemperature() : '${double.parse(hive.getTemperature())}º C',
                           style: const TextStyle(fontSize: 12),
                         )
                       ]),
@@ -69,7 +69,7 @@ class HiveCard extends StatelessWidget {
                         const Padding(padding: EdgeInsets.only(right: 3.5)),
                         const Text('Current humidity: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                         Text(
-                          '${hive.getHumidity().toString()}%',
+                          hive.getHumidity() == "Error" || hive.getHumidity() == "Loading" ? hive.getHumidity() : '${double.parse(hive.getHumidity())}%',
                           style: const TextStyle(fontSize: 12),
                         )
                       ]),

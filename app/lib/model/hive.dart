@@ -3,8 +3,8 @@ class Hive {
   final String id;
   final String name;
   final String ownerId;
-  final double humidity;
-  final double temperature;
+  final String humidity;
+  final String temperature;
   final double weight;
   final DateTime lastFed;
   final bool hasActions;
@@ -25,8 +25,8 @@ class Hive {
   String getId() => id;
   String getName() => name;
   String getOwnerId() => ownerId;
-  double getHumidity() => humidity;
-  double getTemperature() => temperature;
+  String getHumidity() => humidity;
+  String getTemperature() => temperature;
   double getWeight() => weight;
   DateTime getLastFed() => lastFed;
   String getProfilePicPath() => profilePicPath;
