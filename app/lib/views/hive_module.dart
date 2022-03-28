@@ -26,23 +26,24 @@ class _HiveModuleState extends State<HiveModule> {
   static const platform = MethodChannel('samples.flutter.dev/temperature');
 
   bool loaded = false;
-  num _temperatureLevel = -1;
+  String _temperatureLevel = "Loading";
+  String _humidityLevel = "Loading";
 
   Future<void> _getTemperatureLevel() async {
-    num temperatureLevel;
     try {
-      temperatureLevel = await platform.invokeMethod('getTemperatureLevel'); 
+      String res = await platform.invokeMethod('getTemperatureLevel'); 
+      print("TEMPERATURE: ${res.split(" ")[0]}");
+      print("HUMIDITY: ${res.split(" ")[1]}");
+
+      setState(() {
+        _temperatureLevel = res.split(" ")[0];
+        _humidityLevel = res.split(" ")[1];
+        loaded = true;
+      });
     } on PlatformException catch (e) {
-      temperatureLevel = -2;
       print(e);
     }
 
-    setState(() {
-      _temperatureLevel = temperatureLevel;
-      loaded = true;
-    });
-
-    print("TEMPERATURE IS $_temperatureLevel");
   }
 
   /// SEPARATOR
@@ -132,7 +133,7 @@ class _HiveModuleState extends State<HiveModule> {
     final appbarHeight = AppBar().preferredSize.height;
     final username = context.watch<UserState>().username;
 
-    _temperatureLevel == -1 ? _getTemperatureLevel() : null;
+    !loaded ? _getTemperatureLevel() : null;
 
     return Scaffold(
         appBar: AppBar(
@@ -146,6 +147,8 @@ class _HiveModuleState extends State<HiveModule> {
                 mediaQuery.padding.bottom),
             child: Column(
               children: <Widget>[
+                Text(_temperatureLevel),
+                Text(_humidityLevel),
                 WelcomeDashboard(
                     name: username, numOfActions: actionList.length),
                 HiveListController(
