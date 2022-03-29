@@ -89,6 +89,8 @@ class _CategoryPostsState extends State<CategoryPosts> {
           finalListOfPost.add(tempPost);
         }
 
+        finalListOfPost = finalListOfPost.reversed.toList();
+
         setState(() {
           loaded = true;
         });
