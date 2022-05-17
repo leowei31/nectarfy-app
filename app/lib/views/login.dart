@@ -1,4 +1,4 @@
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -49,36 +49,56 @@ class _LoginScreenState extends State<LoginScreen> {
               Column(
                 children: [
                   ElevatedButton(
-                      child: Text("Add User"),
+                      child: Text("Register"),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
+                      ),
                       onPressed: () {
                         AuthService().addUser(name, password).then((val) {
-                          // Fluttertoast.showToast(
-                          //   msg: val.data['msg'],
-                          //   toastLength: Toast.LENGTH_SHORT,
-                          //   gravity: ToastGravity.BOTTOM,
-                          //   timeInSecForIosWeb: 1,
-                          //   backgroundColor: Colors.green,
-                          //   textColor: Colors.white,
-                          //   fontSize: 16.0,
-                          // );
+                          Fluttertoast.showToast(
+                            msg: val.data['msg'],
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
                         });
                       }),
                   SizedBox(height: 20),
                   ElevatedButton(
-                      child: const Text("Login"),
+                      child: const Text("  Login  "),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
+                      ),
                       onPressed: () {
                         AuthService().login(name, password).then((val) {
                           if (val.data['success']) {
                             token = val.data['token'];
-                            // Fluttertoast.showToast(
-                            //   msg: 'Authenticated',
-                            //   toastLength: Toast.LENGTH_SHORT,
-                            //   gravity: ToastGravity.BOTTOM,
-                            //   timeInSecForIosWeb: 1,
-                            //   backgroundColor: Colors.green,
-                            //   textColor: Colors.white,
-                            //   fontSize: 16.0,
-                            // );
+                            Fluttertoast.showToast(
+                              msg: 'Authenticated',
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
                             AuthService().getinfo(token).then((val) {
                               context
                                   .read<UserState>()

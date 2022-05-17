@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../widgets/community_module/community_board.dart';
 import '../widgets/community_module/featured_post.dart';
@@ -61,18 +62,19 @@ class _CommunityModuleState extends State<CommunityModule> {
     }
 
     void _handlePost(Post post) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => IndividualPost(post: post, onReload: _onPageReturn)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  IndividualPost(post: post, onReload: _onPageReturn)));
     }
 
     void _handleCategory(Category cat) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => CategoryPosts(
-                    category: cat,
-                    onReload: _onPageReturn
-                  )));
+              builder: (context) =>
+                  CategoryPosts(category: cat, onReload: _onPageReturn)));
     }
 
     Future<void> initState() async {
@@ -178,7 +180,18 @@ class _CommunityModuleState extends State<CommunityModule> {
                       ),
                     ),
                   ),
-                  onPressed: () => _addNewPost(context),
+                  onPressed: () {
+                    _addNewPost(context);
+                    Fluttertoast.showToast(
+                      msg: 'Make New Post',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  },
                 ),
 
                 const Padding(padding: EdgeInsets.only(bottom: 25)),
@@ -195,10 +208,7 @@ class _CommunityModuleState extends State<CommunityModule> {
                 ),
 
                 isLoaded
-                    ? FeaturedPost(
-                        post: recentPost,
-                        onPressedFn: _handlePost
-                      )
+                    ? FeaturedPost(post: recentPost, onPressedFn: _handlePost)
                     : CircularProgressIndicator(
                         color: Theme.of(context).primaryColor,
                       ),
@@ -217,10 +227,7 @@ class _CommunityModuleState extends State<CommunityModule> {
                 ),
 
                 isLoaded
-                    ? FeaturedPost(
-                        post: hottestPost,
-                        onPressedFn: _handlePost
-                      )
+                    ? FeaturedPost(post: hottestPost, onPressedFn: _handlePost)
                     : CircularProgressIndicator(
                         color: Theme.of(context).primaryColor,
                       ),

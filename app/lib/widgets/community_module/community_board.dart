@@ -44,7 +44,7 @@ class _CommunityBoardState extends State<CommunityBoard> {
                     child: const Text(_communityBoardDesc,
                         style: TextStyle(fontSize: 12))),
                 SizedBox(
-                  height: 40,
+                  height: 30,
                   child: TextField(
                     controller: searchController,
                     style: const TextStyle(fontSize: 12),
